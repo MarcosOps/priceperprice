@@ -58,13 +58,18 @@ npx expo start --ios      # Para iOS (somente no Mac)
 #### FREE VERSION
 Interface intuitiva: Uso de ícones para diferentes unidades e layout que destaque o preço por unidade.
 Comparação de 2 produtos: Compara 2 produtos e exibir um ranking do mais barato ao mais caro.
-
+Modo escuro: Adicione suporte a modo escuro para melhorar a experiência do usuário em ambientes com pouca luz.
 
 #### PREMIUM VERSION
 Comparação de mais de 2 produtos: Permitir inserir múltiplos produtos e exibir um ranking do mais barato ao mais caro.
 Histórico de comparações: Para que o usuário possa consultar decisões anteriores.
 Conversão automática de unidades: Se um produto está em kg e outro em g, o app faz a conversão automaticamente.
 Modo scanner: Se quiser evoluir o app, um leitor de código de barras poderia preencher os valores automaticamente.
+Gráficos de comparação: Mostre um gráfico simples para visualizar a diferença de preços entre os produtos.
+Feedback visual: Destaque visualmente o produto mais barato com uma cor diferente ou um ícone de "melhor escolha".
+
+
+
 
 #### Modo scanner
 O modo scanner funciona usando a câmera do celular para capturar informações, geralmente por meio de um código de barras ou OCR (reconhecimento de texto). Existem duas formas principais que podem ser úteis para o PricePerPrice (PPP):
