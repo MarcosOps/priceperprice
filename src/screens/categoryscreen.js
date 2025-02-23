@@ -1,54 +1,107 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const subcategories = {
-  Volume: ["ml", "L", "oz", "gal"],
-  Length: ["cm", "m", "inch", "ft"],
-  Mass: ["mg", "g", "kg", "lb", "oz"],
-};
+export default function ComparisonScreen({ route, navigation }) {
+  const { unit } = route.params;
 
-const unitIcons = {
-  ml: 'water',
-  L: 'water',
-  oz: 'bottle-wine',
-  gal: 'gas-cylinder',
-  cm: 'ruler',
-  m: 'ruler',
-  inch: 'ruler',
-  ft: 'ruler',
-  mg: 'weight-gram',
-  g: 'weight',
-  kg: 'weight-kilogram',
-  lb: 'weight-pound',
-};
+  // Estados para armazenar os valores inseridos pelo usuário
+  const [quantity1, setQuantity1] = useState('');
+  const [price1, setPrice1] = useState('');
+  const [quantity2, setQuantity2] = useState('');
+  const [price2, setPrice2] = useState('');
+  const [result, setResult] = useState('');
 
-export default function CategoryScreen({ route, navigation }) {
-  const { category } = route.params;
+  // Função para calcular o preço por unidade
+  const calculatePricePerUnit = (quantity, price) => {
+    if (quantity && price) {
+      return parseFloat(price) / parseFloat(quantity);
+    }
+    return null;
+  };
+
+  // Função para comparar os preços
+  const comparePrices = () => {
+    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1);
+    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
+
+    if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
+      if (pricePerUnit1 < pricePerUnit2) {
+        setResult(`Produto 1 é mais barato que o Produto 2 (${pricePerUnit1.toFixed(2)}/${unit} vs ${pricePerUnit2.toFixed(2)}/${unit})`);
+      } else if (pricePerUnit1 > pricePerUnit2) {
+        setResult(`Produto 2 é mais barato que o Produto 1 (${pricePerUnit2.toFixed(2)}/${unit} vs ${pricePerUnit1.toFixed(2)}/${unit})`);
+      } else {
+        setResult('Os produtos têm o mesmo preço por unidade.');
+      }
+    } else {
+      setResult('Por favor, insira valores válidos para quantidade e preço.');
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Escolha uma Unidade ({category})</Text>
-      
-      {subcategories[category].map((unit) => (
-        <TouchableOpacity
-          key={unit}
-          style={styles.button}
-          onPress={() => navigation.navigate('Comparison', { unit })}
-        >
-          <Icon name={unitIcons[unit]} size={24} color="#000" />
-          <Text style={styles.buttonText}>{unit}</Text>
-        </TouchableOpacity>
-      ))}
+      <Text style={styles.title}>Comparação de Preço ({unit})</Text>
 
-      {/* Ícone de Home no corpo da tela */}
-      <TouchableOpacity
-        style={styles.homeButton}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Icon name="home" size={24} color="#000" />
-        <Text style={styles.homeButtonText}>Voltar para Início</Text>
+      {/* Campos para o Produto 1 */}
+      <Text style={styles.label}>Produto 1</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={`Quantidade (${unit})`}
+        keyboardType="numeric"
+        value={quantity1}
+        onChangeText={setQuantity1}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Preço"
+        keyboardType="numeric"
+        value={price1}
+        onChangeText={setPrice1}
+      />
+
+      {/* Campos para o Produto 2 */}
+      <Text style={styles.label}>Produto 2</Text>
+      <TextInput
+        style={styles.input}
+        placeholder={`Quantidade (${unit})`}
+        keyboardType="numeric"
+        value={quantity2}
+        onChangeText={setQuantity2}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Preço"
+        keyboardType="numeric"
+        value={price2}
+        onChangeText={setPrice2}
+      />
+
+      {/* Botão para calcular */}
+      <TouchableOpacity style={styles.button} onPress={comparePrices}>
+        <Text style={styles.buttonText}>Calcular</Text>
       </TouchableOpacity>
+
+      {/* Exibir o resultado */}
+      {result ? <Text style={styles.result}>{result}</Text> : null}
+
+      {/* Botões de navegação no corpo da tela */}
+      <View style={styles.navigationButtons}>
+        {/* <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="arrow-left" size={24} color="#000" />
+          <Text style={styles.navButtonText}>Voltar</Text>
+        </TouchableOpacity> */}
+
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => navigation.navigate('Home')}
+        >
+          <Icon name="home" size={24} color="#000" />
+          <Text style={styles.navButtonText}>Início</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -56,35 +109,58 @@ export default function CategoryScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     padding: 16,
+    backgroundColor: '#fff',
   },
   title: {
     fontSize: 24,
+    fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  label: {
+    fontSize: 18,
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  input: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 8,
-    marginBottom: 10,
-    width: '80%',
-  },
-  buttonText: {
-    marginLeft: 10,
-    fontSize: 18,
-  },
-  homeButton: {
-    flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  result: {
+    marginTop: 20,
+    fontSize: 18,
+    textAlign: 'center',
+    color: '#333',
+  },
+  navigationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  navButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 10,
   },
-  homeButtonText: {
-    marginLeft: 10,
+  navButtonText: {
+    marginLeft: 5,
     fontSize: 16,
   },
 });
