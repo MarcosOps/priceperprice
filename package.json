@@ -1,37 +1,37 @@
 {
-    "name": "priceperprice",
-    "version": "1.0.0",
-    "main": "node_modules/expo/AppEntry.js",
-    "scripts": {
-        "start": "expo start",
-        "android": "expo start --android",
-        "ios": "expo start --ios",
-        "web": "expo start --web"
-    },
-    "dependencies": {
-        "expo": "^50.0.0",
-        "react": "18.2.0",
-        "react-native": "0.72.0",
-        "@react-navigation/native": "^6.1.0",
-        "@react-navigation/stack": "^6.3.16",
-        "react-native-screens": "^3.29.0",
-        "react-native-gesture-handler": "^2.12.0",
-        "react-native-reanimated": "^3.5.0"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.24.0"
-    },
-    "private": true,
-    "description": "``` priceperprice/ ├── src/ │   ├── screens/        # Telas do app │   │   ├── HomeScreen.js │   │   ├── CategoryScreen.js │   │   ├── ComparisonScreen.js │   ├── components/     # Componentes reutilizáveis │   ├── App.js          # Arquivo principal do app │   ├── navigation/     # Sistema de navegação │   │   ├── StackNavigator.js ├── package.json        # Dependências do projeto ```",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/MarcosOps/priceperprice.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/MarcosOps/priceperprice/issues"
-    },
-    "homepage": "https://github.com/MarcosOps/priceperprice#readme"
+  "name": "priceperprice",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "expo": "^52.0.0",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "@react-navigation/native": "^6.1.0",
+    "@react-navigation/stack": "^6.3.16",
+    "react-native-screens": "~4.4.0",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-reanimated": "~3.16.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2"
+  },
+  "private": true,
+  "description": "``` priceperprice/ ├── src/ │   ├── screens/        # Telas do app │   │   ├── HomeScreen.js │   │   ├── CategoryScreen.js │   │   ├── ComparisonScreen.js │   ├── components/     # Componentes reutilizáveis │   ├── App.js          # Arquivo principal do app │   ├── navigation/     # Sistema de navegação │   │   ├── StackNavigator.js ├── package.json        # Dependências do projeto ```",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcosOps/priceperprice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcosOps/priceperprice/issues"
+  },
+  "homepage": "https://github.com/MarcosOps/priceperprice#readme"
 }

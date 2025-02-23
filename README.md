@@ -27,10 +27,6 @@ cd priceperprice
 npm install
 ```
 
-```
-npm install -g expo-cli
-```
-
 2. Iniciar o Projeto
 ```
 npx expo start
