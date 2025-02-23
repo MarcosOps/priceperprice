@@ -3,3 +3,5 @@ node_modules/
 
 # Ignorar a pasta .expo
 .expo/
+
+package-lock.json
