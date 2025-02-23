@@ -26,15 +26,33 @@ export default function ComparisonScreen({ route, navigation }) {
     const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
 
     if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
+      const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
+
       if (pricePerUnit1 < pricePerUnit2) {
-        setResult(`Produto 1 é mais barato que o Produto 2 (${pricePerUnit1.toFixed(2)}/${unit} vs ${pricePerUnit2.toFixed(2)}/${unit})`);
+        setResult({
+          message: 'Produto 1 é mais barato que o Produto 2',
+          winner: 'Produto 1',
+          difference: `${difference} ${unit}`,
+        });
       } else if (pricePerUnit1 > pricePerUnit2) {
-        setResult(`Produto 2 é mais barato que o Produto 1 (${pricePerUnit2.toFixed(2)}/${unit} vs ${pricePerUnit1.toFixed(2)}/${unit})`);
+        setResult({
+          message: 'Produto 2 é mais barato que o Produto 1',
+          winner: 'Produto 2',
+          difference: `${difference} ${unit}`,
+        });
       } else {
-        setResult('Os produtos têm o mesmo preço por unidade.');
+        setResult({
+          message: 'Os produtos têm o mesmo preço por unidade.',
+          winner: null,
+          difference: null,
+        });
       }
     } else {
-      setResult('Por favor, insira valores válidos para quantidade e preço.');
+      setResult({
+        message: 'Por favor, insira valores válidos para quantidade e preço.',
+        winner: null,
+        difference: null,
+      });
     }
   };
 
@@ -82,17 +100,31 @@ export default function ComparisonScreen({ route, navigation }) {
       </TouchableOpacity>
 
       {/* Exibir o resultado */}
-      {result ? <Text style={styles.result}>{result}</Text> : null}
+      {result.message && (
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultMessage}>{result.message}</Text>
+          {result.winner && (
+            <Text style={styles.resultWinner}>
+              {result.winner} é mais barato!
+            </Text>
+          )}
+          {result.difference && (
+            <Text style={styles.resultDifference}>
+              Diferença: {result.difference}
+            </Text>
+          )}
+        </View>
+      )}
 
       {/* Botões de navegação no corpo da tela */}
       <View style={styles.navigationButtons}>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.navButton}
           onPress={() => navigation.goBack()}
         >
           <Icon name="arrow-left" size={24} color="#000" />
           <Text style={styles.navButtonText}>Voltar</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.navButton}
@@ -143,11 +175,30 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  result: {
+  resultContainer: {
     marginTop: 20,
+    padding: 15,
+    backgroundColor: '#f9f9f9',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    alignItems: 'center',
+  },
+  resultMessage: {
     fontSize: 18,
-    textAlign: 'center',
     color: '#333',
+    textAlign: 'center',
+  },
+  resultWinner: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#28a745',
+    marginTop: 10,
+  },
+  resultDifference: {
+    fontSize: 16,
+    color: '#666',
+    marginTop: 5,
   },
   navigationButtons: {
     flexDirection: 'row',
