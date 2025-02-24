@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import styles from './styles';
+import styles from './styles'; // Importando os estilos
 
 const units = [
   "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz"
@@ -36,19 +36,19 @@ export default function ConversionScreen() {
 
       if (pricePerUnit1 < pricePerUnit2) {
         setResult({
-          message: 'Produto 1 é mais barato que o Produto 2',
+          message: `Produto 1 é mais barato que o Produto 2 por ${unit1}`,
           winner: 'Produto 1',
-          difference: `${difference} por unidade`,
+          difference: `Diferença: ${difference} ${unit1}`,
         });
       } else if (pricePerUnit1 > pricePerUnit2) {
         setResult({
-          message: 'Produto 2 é mais barato que o Produto 1',
+          message: `Produto 2 é mais barato que o Produto 1 por ${unit2}`,
           winner: 'Produto 2',
-          difference: `${difference} por unidade`,
+          difference: `Diferença: ${difference} ${unit2}`,
         });
       } else {
         setResult({
-          message: 'Os produtos têm o mesmo preço por unidade.',
+          message: `Os produtos têm o mesmo preço por ${unit1}.`,
           winner: null,
           difference: null,
         });
@@ -155,7 +155,7 @@ export default function ConversionScreen() {
           )}
           {result.difference && (
             <Text style={styles.resultDifference}>
-              Diferença: {result.difference}
+              {result.difference}
             </Text>
           )}
         </View>
