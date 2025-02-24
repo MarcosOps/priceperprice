@@ -4,7 +4,7 @@ import { Picker } from '@react-native-picker/picker';
 import styles from './styles'; // Importando os estilos
 
 const units = [
-  "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz"
+  "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz", "unidade"
 ];
 
 export default function ConversionScreen() {
@@ -28,6 +28,24 @@ export default function ConversionScreen() {
 
   // Função para comparar os preços
   const comparePrices = () => {
+    if (unit1 === "unidade" && unit2 !== "unidade") {
+      setResult({
+        message: 'A unidade "unidade" só pode ser comparada com ela mesma.',
+        winner: null,
+        difference: null,
+      });
+      return;
+    }
+
+    if (unit2 === "unidade" && unit1 !== "unidade") {
+      setResult({
+        message: 'A unidade "unidade" só pode ser comparada com ela mesma.',
+        winner: null,
+        difference: null,
+      });
+      return;
+    }
+
     const pricePerUnit1 = calculatePricePerUnit(quantity1, price1);
     const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
 
