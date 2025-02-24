@@ -105,3 +105,23 @@ Lista simples (mais rápida de navegar)
         Pode tornar a experiência mais interativa, mas exige mais design.
 
 Se quiser, podemos começar com a lista simples e depois testar os ícones para ver se melhora a experiência. O que acha?
+
+### tela de animacao:
+
+Melhorias Futuras
+
+    Personalização da Animação:
+
+        Você pode adicionar animações mais complexas, como zoom, rotação ou transições.
+
+    Carregamento de Dados:
+
+        Se o app precisar carregar dados iniciais (como configurações ou dados do usuário), você pode fazer isso durante a exibição da tela de apresentação.
+
+    Logotipo:
+
+        Adicione um logotipo ou imagem à tela de apresentação para torná-la mais atraente.
+
+    Tempo de Exibição:
+
+        Ajuste o tempo de exibição da tela de apresentação conforme necessário.

@@ -16,15 +16,39 @@
 //   );
 // }
 
+// import React from 'react';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import ConversionScreen from '../src/screens/ConversionScreen';
+
+// const Stack = createStackNavigator();
+
+// export default function StackNavigator() {
+//   return (
+//     <Stack.Navigator>
+//       <Stack.Screen
+//         name="Conversion"
+//         component={ConversionScreen}
+//         options={{ title: 'Comparação de Preços' }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
+
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import SplashScreen from '../src/screens/SplashScreen';
 import ConversionScreen from '../src/screens/ConversionScreen';
 
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        name="Splash"
+        component={SplashScreen}
+        options={{ headerShown: false }} // Oculta o cabeçalho na tela de apresentação
+      />
       <Stack.Screen
         name="Conversion"
         component={ConversionScreen}
