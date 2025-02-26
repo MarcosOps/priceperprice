@@ -52,7 +52,18 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Conversion"
         component={ConversionScreen}
-        options={{ title: 'Comparação de Preços' }}
+        options={{ headerShown: false }} // Oculta o cabeçalho na tela de conversão
+        // component={ConversionScreen}
+        // options={{
+        //   title: 'Comparação de Preços', // Título do cabeçalho
+        //   headerStyle: {
+        //     backgroundColor: '#FFFF00', // Fundo amarelo
+        //   },
+        //   headerTintColor: '#000000', // Cor do texto preto
+        //   headerTitleStyle: {
+        //     fontWeight: 'bold', // Texto em negrito
+        //   },
+        // }}
       />
     </Stack.Navigator>
   );

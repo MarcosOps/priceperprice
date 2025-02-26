@@ -1,26 +1,26 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  // Estilos para a SplashScreen
-  splashContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFF00', // Fundo amarelo
-  },
-  splashTextContainer: {
-    flexDirection: 'row', // Dispor as letras horizontalmente
-  },
-  splashText: {
-    fontSize: 32,
-    fontWeight: 'bold', // Texto em negrito
-    marginHorizontal: 2, // Espaçamento entre as letras
-  },
-
-  // Estilos para a ConversionScreen
+    // Estilos para a SplashScreen
+    // splashContainer: {
+    //   flex: 1,
+    //   justifyContent: 'center',
+    //   alignItems: 'center',
+    //   backgroundColor: '#FFFF00', // Fundo amarelo
+    // },
+    // splashTextContainer: {
+    //   flexDirection: 'row', // Dispor as letras horizontalmente
+    // },
+    // splashText: {
+    //   fontSize: 32,
+    //   fontWeight: 'bold', // Texto em negrito
+    //   marginHorizontal: 2, // Espaçamento entre as letras
+    // },
+  
+    // Estilos para a ConversionScreen
   conversionContainer: {
     flex: 1,
-    padding: 16,
+    padding: 40,
     backgroundColor: '#FFFF00', // Fundo amarelo
   },
   conversionTitle: {
@@ -61,7 +61,7 @@ export default StyleSheet.create({
   conversionButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 0,
+    //marginTop: 20,
   },
   conversionCalculateButton: {
     backgroundColor: '#007BFF',
