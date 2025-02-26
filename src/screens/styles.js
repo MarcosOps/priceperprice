@@ -1,47 +1,69 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
+  // Estilos para a SplashScreen
+  splashContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFF00', // Fundo amarelo
+  },
+  splashTextContainer: {
+    flexDirection: 'row', // Dispor as letras horizontalmente
+  },
+  splashText: {
+    fontSize: 32,
+    fontWeight: 'bold', // Texto em negrito
+    marginHorizontal: 2, // Espaçamento entre as letras
+  },
+
+  // Estilos para a ConversionScreen
+  conversionContainer: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFF00', // Fundo amarelo
   },
-  title: {
+  conversionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#000000', // Cor do texto preto
   },
-  label: {
+  conversionLabel: {
     fontSize: 18,
     marginTop: 10,
     marginBottom: 5,
+    color: '#000000', // Cor do texto preto
   },
-  inputGroup: {
+  conversionInputGroup: {
     marginBottom: 20,
   },
-  picker: {
+  conversionPicker: {
     height: 50,
     width: '100%',
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
+    backgroundColor: '#FFFFFF', // Fundo branco para o Picker
   },
-  input: {
+  conversionInput: {
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
     marginBottom: 10,
+    backgroundColor: '#FFFFFF', // Fundo branco para os campos de entrada
+    color: '#000000', // Cor do texto preto
   },
-  buttonContainer: {
+  conversionButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 20,
   },
-  calculateButton: {
+  conversionCalculateButton: {
     backgroundColor: '#007BFF',
     padding: 15,
     borderRadius: 8,
@@ -49,7 +71,7 @@ export default StyleSheet.create({
     marginRight: 10,
     alignItems: 'center',
   },
-  clearButton: {
+  conversionClearButton: {
     backgroundColor: '#dc3545',
     padding: 15,
     borderRadius: 8,
@@ -57,34 +79,34 @@ export default StyleSheet.create({
     marginLeft: 10,
     alignItems: 'center',
   },
-  buttonText: {
-    color: '#fff',
+  conversionButtonText: {
+    color: '#FFFFFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
-  resultContainer: {
+  conversionResultContainer: {
     marginTop: 20,
     padding: 15,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#FFFFFF', // Fundo branco para o resultado
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#ddd',
     alignItems: 'center',
   },
-  resultMessage: {
+  conversionResultMessage: {
     fontSize: 18,
-    color: '#333',
+    color: '#000000', // Cor do texto preto
     textAlign: 'center',
   },
-  resultWinner: {
+  conversionResultWinner: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#28a745',
+    color: '#28a745', // Verde para o vencedor
     marginTop: 10,
   },
-  resultDifference: {
+  conversionResultDifference: {
     fontSize: 16,
-    color: '#666',
+    color: '#000000', // Cor do texto preto
     marginTop: 5,
   },
 });

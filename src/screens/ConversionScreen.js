@@ -45,7 +45,7 @@ export default function ConversionScreen() {
       });
       return;
     }
-
+    
     const pricePerUnit1 = calculatePricePerUnit(quantity1, price1);
     const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
 
@@ -92,31 +92,33 @@ export default function ConversionScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Comparação de Preços</Text>
+    <View style={styles.conversionContainer}>
+      <Text style={styles.conversionTitle}>Comparação de Preços</Text>
 
       {/* Produto 1 */}
-      <Text style={styles.label}>Produto 1</Text>
-      <View style={styles.inputGroup}>
+      <Text style={styles.conversionLabel}>Produto 1</Text>
+      <View style={styles.conversionInputGroup}>
         <Picker
           selectedValue={unit1}
           onValueChange={(itemValue) => setUnit1(itemValue)}
-          style={styles.picker}
+          style={styles.conversionPicker}
         >
           {units.map((unit) => (
             <Picker.Item key={unit} label={unit} value={unit} />
           ))}
         </Picker>
         <TextInput
-          style={styles.input}
+          style={styles.conversionInput}
           placeholder="Quantidade"
+          placeholderTextColor="#666"
           keyboardType="numeric"
           value={quantity1}
           onChangeText={setQuantity1}
         />
         <TextInput
-          style={styles.input}
+          style={styles.conversionInput}
           placeholder="Preço"
+          placeholderTextColor="#666"
           keyboardType="numeric"
           value={price1}
           onChangeText={setPrice1}
@@ -124,27 +126,29 @@ export default function ConversionScreen() {
       </View>
 
       {/* Produto 2 */}
-      <Text style={styles.label}>Produto 2</Text>
-      <View style={styles.inputGroup}>
+      <Text style={styles.conversionLabel}>Produto 2</Text>
+      <View style={styles.conversionInputGroup}>
         <Picker
           selectedValue={unit2}
           onValueChange={(itemValue) => setUnit2(itemValue)}
-          style={styles.picker}
+          style={styles.conversionPicker}
         >
           {units.map((unit) => (
             <Picker.Item key={unit} label={unit} value={unit} />
           ))}
         </Picker>
         <TextInput
-          style={styles.input}
+          style={styles.conversionInput}
           placeholder="Quantidade"
+          placeholderTextColor="#666"
           keyboardType="numeric"
           value={quantity2}
           onChangeText={setQuantity2}
         />
         <TextInput
-          style={styles.input}
+          style={styles.conversionInput}
           placeholder="Preço"
+          placeholderTextColor="#666"
           keyboardType="numeric"
           value={price2}
           onChangeText={setPrice2}
@@ -152,27 +156,27 @@ export default function ConversionScreen() {
       </View>
 
       {/* Botões de Calcular e Limpar */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.calculateButton} onPress={comparePrices}>
-          <Text style={styles.buttonText}>Calcular</Text>
+      <View style={styles.conversionButtonContainer}>
+        <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
+          <Text style={styles.conversionButtonText}>Calcular</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.clearButton} onPress={clearFields}>
-          <Text style={styles.buttonText}>Limpar</Text>
+        <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
+          <Text style={styles.conversionButtonText}>Limpar</Text>
         </TouchableOpacity>
       </View>
 
       {/* Exibir o resultado */}
       {result.message && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultMessage}>{result.message}</Text>
+        <View style={styles.conversionResultContainer}>
+          <Text style={styles.conversionResultMessage}>{result.message}</Text>
           {result.winner && (
-            <Text style={styles.resultWinner}>
+            <Text style={styles.conversionResultWinner}>
               {result.winner} é mais barato!
             </Text>
           )}
           {result.difference && (
-            <Text style={styles.resultDifference}>
+            <Text style={styles.conversionResultDifference}>
               {result.difference}
             </Text>
           )}
