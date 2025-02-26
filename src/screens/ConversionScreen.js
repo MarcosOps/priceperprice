@@ -45,7 +45,7 @@ export default function ConversionScreen() {
       });
       return;
     }
-    
+
     const pricePerUnit1 = calculatePricePerUnit(quantity1, price1);
     const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
 
@@ -56,13 +56,13 @@ export default function ConversionScreen() {
         setResult({
           message: `Produto 1 é mais barato que o Produto 2 por ${unit1}`,
           winner: 'Produto 1',
-          difference: `Diferença: ${difference} por ${unit1}`,
+          difference: `Diferença: $${difference} por ${unit1}`,
         });
       } else if (pricePerUnit1 > pricePerUnit2) {
         setResult({
           message: `Produto 2 é mais barato que o Produto 1 por ${unit2}`,
           winner: 'Produto 2',
-          difference: `Diferença: ${difference} por ${unit2}`,
+          difference: `Diferença: $${difference} por ${unit2}`,
         });
       } else {
         setResult({
@@ -93,7 +93,7 @@ export default function ConversionScreen() {
 
   return (
     <View style={styles.conversionContainer}>
-      <Text style={styles.conversionTitle}>Comparação de Preços</Text>
+      <Text style={styles.conversionTitle}>PricePerPrice</Text>
 
       {/* Produto 1 */}
       <Text style={styles.conversionLabel}>Produto 1</Text>
@@ -157,12 +157,12 @@ export default function ConversionScreen() {
 
       {/* Botões de Calcular e Limpar */}
       <View style={styles.conversionButtonContainer}>
-        <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
-          <Text style={styles.conversionButtonText}>Calcular</Text>
+        <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
+        <Text style={styles.conversionButtonText}>Limpar</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
-          <Text style={styles.conversionButtonText}>Limpar</Text>
+        <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
+          <Text style={styles.conversionButtonText}>Calcular</Text>
         </TouchableOpacity>
       </View>
 
