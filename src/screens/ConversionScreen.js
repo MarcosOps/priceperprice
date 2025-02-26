@@ -7,6 +7,23 @@ const units = [
   "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz", "unidade"
 ];
 
+// Função para renderizar o texto com cores diferentes
+const renderColoredText = (text) => {
+  const parts = text.split('Per'); // Divide o texto em partes
+  return parts.map((part, index) => {
+    if (index < parts.length - 1) {
+      return (
+        <Text key={index}>
+          <Text style={{ color: '#000000' }}>{part}</Text>
+          <Text style={{ color: '#FF0000' }}>Per</Text>
+        </Text>
+      );
+    } else {
+      return <Text key={index} style={{ color: '#000000' }}>{part}</Text>;
+    }
+  });
+};
+
 export default function ConversionScreen() {
   const [unit1, setUnit1] = useState(units[0]);
   const [quantity1, setQuantity1] = useState('');
@@ -93,7 +110,10 @@ export default function ConversionScreen() {
 
   return (
     <View style={styles.conversionContainer}>
-      <Text style={styles.conversionTitle}>PricePerPrice</Text>
+      {/* Título com "Per" em vermelho */}
+      <Text style={styles.conversionTitle}>
+        {renderColoredText('PricePerPrice')}
+      </Text>
 
       {/* Produto 1 */}
       <Text style={styles.conversionLabel}>Produto 1</Text>
@@ -158,7 +178,7 @@ export default function ConversionScreen() {
       {/* Botões de Calcular e Limpar */}
       <View style={styles.conversionButtonContainer}>
         <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
-        <Text style={styles.conversionButtonText}>Limpar</Text>
+          <Text style={styles.conversionButtonText}>Limpar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
