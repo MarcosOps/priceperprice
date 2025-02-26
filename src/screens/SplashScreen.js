@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Animated } from 'react-native';
 
 const SplashScreen = ({ navigation }) => {
   const appName = "PricePerPrice"; // Nome do app
+  const highlightText = "Per"; // Texto destacado
   const letterAnimations = useRef(appName.split('').map(() => new Animated.Value(0))).current; // Array de valores animados para cada letra
 
   useEffect(() => {
@@ -10,8 +11,8 @@ const SplashScreen = ({ navigation }) => {
     const animations = letterAnimations.map((anim, index) =>
       Animated.timing(anim, {
         toValue: 1,
-        duration: 70, // Duração da animação de cada letra
-        delay: index * 10, // Atraso entre as letras
+        duration: 5, // Duração da animação de cada letra
+        delay: index * 5, // Atraso entre as letras
         useNativeDriver: true,
       })
     );
@@ -30,27 +31,36 @@ const SplashScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
-        {appName.split('').map((letter, index) => (
-          <Animated.Text
-            key={index}
-            style={[
-              styles.text,
-              {
-                opacity: letterAnimations[index], // Animação de opacidade
-                transform: [
-                  {
-                    translateY: letterAnimations[index].interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [20, 0], // Animação de deslocamento vertical
-                    }),
-                  },
-                ],
-              },
-            ]}
-          >
-            {letter}
-          </Animated.Text>
-        ))}
+        {appName.split('').map((letter, index) => {
+          // Verifica se a letra atual faz parte do texto destacado
+          const isHighlighted =
+            index >= appName.indexOf(highlightText) &&
+            index < appName.indexOf(highlightText) + highlightText.length;
+
+          return (
+            <Animated.Text
+              key={index}
+              style={[
+                styles.text,
+                {
+                  opacity: letterAnimations[index], // Animação de opacidade
+                  transform: [
+                    {
+                      translateY: letterAnimations[index].interpolate({
+                        inputRange: [0, 1],
+                        outputRange: [20, 0], // Animação de deslocamento vertical
+                      }),
+                    },
+                  ],
+                  color: isHighlighted ? '#FF0000' : '#000000', // Cor do texto (vermelho para "Per", preto para o resto)
+                  fontWeight: 'bold', // Texto em negrito
+                },
+              ]}
+            >
+              {letter}
+            </Animated.Text>
+          );
+        })}
       </View>
     </View>
   );
@@ -61,15 +71,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#007BFF', // Cor de fundo da tela de apresentação
+    backgroundColor: '#FFFF00', // Fundo amarelo
   },
   textContainer: {
     flexDirection: 'row', // Dispor as letras horizontalmente
   },
   text: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF', // Cor do texto
+    fontWeight: 'bold', // Texto em negrito
     marginHorizontal: 2, // Espaçamento entre as letras
   },
 });
