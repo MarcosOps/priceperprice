@@ -24,6 +24,16 @@ const renderColoredText = (text) => {
   });
 };
 
+// Função para formatar o valor como moeda
+const formatCurrency = (value) => {
+  const numericValue = value.replace(/[^0-9]/g, '');
+  const number = parseFloat(numericValue) / 100;
+  return number.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+};
+
 export default function ConversionScreen() {
   const [unit1, setUnit1] = useState(units[0]);
   const [quantity1, setQuantity1] = useState('');
@@ -63,8 +73,8 @@ export default function ConversionScreen() {
       return;
     }
 
-    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1);
-    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2);
+    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1.replace(/[^0-9.]/g, '')); // Remove o símbolo de moeda para cálculo
+    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2.replace(/[^0-9.]/g, '')); // Remove o símbolo de moeda para cálculo
 
     if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
       const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
@@ -141,7 +151,7 @@ export default function ConversionScreen() {
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={price1}
-          onChangeText={setPrice1}
+          onChangeText={(text) => setPrice1(formatCurrency(text))} // Formata o valor como moeda
         />
       </View>
 
@@ -171,7 +181,7 @@ export default function ConversionScreen() {
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={price2}
-          onChangeText={setPrice2}
+          onChangeText={(text) => setPrice2(formatCurrency(text))} // Formata o valor como moeda
         />
       </View>
 
