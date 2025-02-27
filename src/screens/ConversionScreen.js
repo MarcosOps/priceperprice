@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import styles from './styles'; // Importando os estilos
+import styles from './styles'; // Importing styles
 
 const units = [
-  "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz", "unidade"
+  "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz", "unit"
 ];
 
-// Função para renderizar o texto com cores diferentes
+// Function to render text with different colors
 const renderColoredText = (text) => {
-  const parts = text.split('Per'); // Divide o texto em partes
+  const parts = text.split('Per'); // Split the text into parts
   return parts.map((part, index) => {
     if (index < parts.length - 1) {
       return (
@@ -24,7 +24,7 @@ const renderColoredText = (text) => {
   });
 };
 
-// Função para formatar o valor como moeda
+// Function to format the value as currency
 const formatCurrency = (value) => {
   const numericValue = value.replace(/[^0-9]/g, '');
   const number = parseFloat(numericValue) / 100;
@@ -45,7 +45,7 @@ export default function ConversionScreen() {
 
   const [result, setResult] = useState('');
 
-  // Função para calcular o preço por unidade
+  // Function to calculate price per unit
   const calculatePricePerUnit = (quantity, price) => {
     if (quantity && price) {
       return parseFloat(price) / parseFloat(quantity);
@@ -53,61 +53,61 @@ export default function ConversionScreen() {
     return null;
   };
 
-  // Função para comparar os preços
+  // Function to compare prices
   const comparePrices = () => {
-    if (unit1 === "unidade" && unit2 !== "unidade") {
+    if (unit1 === "unit" && unit2 !== "unit") {
       setResult({
-        message: 'A unidade "unidade" só pode ser comparada com ela mesma.',
+        message: 'The "unit" unit can only be compared with itself.',
         winner: null,
         difference: null,
       });
       return;
     }
 
-    if (unit2 === "unidade" && unit1 !== "unidade") {
+    if (unit2 === "unit" && unit1 !== "unit") {
       setResult({
-        message: 'A unidade "unidade" só pode ser comparada com ela mesma.',
+        message: 'The "unit" unit can only be compared with itself.',
         winner: null,
         difference: null,
       });
       return;
     }
 
-    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1.replace(/[^0-9.]/g, '')); // Remove o símbolo de moeda para cálculo
-    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2.replace(/[^0-9.]/g, '')); // Remove o símbolo de moeda para cálculo
+    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1.replace(/[^0-9.]/g, ''));
+    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2.replace(/[^0-9.]/g, ''));
 
     if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
       const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
 
       if (pricePerUnit1 < pricePerUnit2) {
         setResult({
-          message: `Produto 1 é mais barato que o Produto 2 por ${unit1}`,
-          winner: 'Produto 1',
-          difference: `Diferença: $${difference} por ${unit1}`,
+          message: `Product 1 is cheaper than Product 2 per ${unit1}`,
+          winner: 'Product 1',
+          difference: `Difference: $${difference} per ${unit1}`,
         });
       } else if (pricePerUnit1 > pricePerUnit2) {
         setResult({
-          message: `Produto 2 é mais barato que o Produto 1 por ${unit2}`,
-          winner: 'Produto 2',
-          difference: `Diferença: $${difference} por ${unit2}`,
+          message: `Product 2 is cheaper than Product 1 per ${unit2}`,
+          winner: 'Product 2',
+          difference: `Difference: $${difference} per ${unit2}`,
         });
       } else {
         setResult({
-          message: `Os produtos têm o mesmo preço por ${unit1}.`,
+          message: `Both products have the same price per ${unit1}.`,
           winner: null,
           difference: null,
         });
       }
     } else {
       setResult({
-        message: 'Por favor, insira valores válidos para quantidade e preço.',
+        message: 'Please enter valid values for quantity and price.',
         winner: null,
         difference: null,
       });
     }
   };
 
-  // Função para limpar os campos e o resultado
+  // Function to clear fields and result
   const clearFields = () => {
     setUnit1(units[0]);
     setQuantity1('');
@@ -120,13 +120,13 @@ export default function ConversionScreen() {
 
   return (
     <View style={styles.conversionContainer}>
-      {/* Título com "Per" em vermelho */}
+      {/* Title with "Per" in red */}
       <Text style={styles.conversionTitle}>
         {renderColoredText('PricePerPrice')}
       </Text>
 
-      {/* Produto 1 */}
-      <Text style={styles.conversionLabel}>Produto 1</Text>
+      {/* Product 1 */}
+      <Text style={styles.conversionLabel}>Product 1</Text>
       <View style={styles.conversionInputGroup}>
         <Picker
           selectedValue={unit1}
@@ -139,7 +139,7 @@ export default function ConversionScreen() {
         </Picker>
         <TextInput
           style={styles.conversionInput}
-          placeholder="Quantidade"
+          placeholder="Quantity"
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={quantity1}
@@ -147,16 +147,16 @@ export default function ConversionScreen() {
         />
         <TextInput
           style={styles.conversionInput}
-          placeholder="Preço"
+          placeholder="Price"
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={price1}
-          onChangeText={(text) => setPrice1(formatCurrency(text))} // Formata o valor como moeda
+          onChangeText={(text) => setPrice1(formatCurrency(text))}
         />
       </View>
 
-      {/* Produto 2 */}
-      <Text style={styles.conversionLabel}>Produto 2</Text>
+      {/* Product 2 */}
+      <Text style={styles.conversionLabel}>Product 2</Text>
       <View style={styles.conversionInputGroup}>
         <Picker
           selectedValue={unit2}
@@ -169,7 +169,7 @@ export default function ConversionScreen() {
         </Picker>
         <TextInput
           style={styles.conversionInput}
-          placeholder="Quantidade"
+          placeholder="Quantity"
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={quantity2}
@@ -177,22 +177,21 @@ export default function ConversionScreen() {
         />
         <TextInput
           style={styles.conversionInput}
-          placeholder="Preço"
+          placeholder="Price"
           placeholderTextColor="#666"
           keyboardType="numeric"
           value={price2}
-          onChangeText={(text) => setPrice2(formatCurrency(text))} // Formata o valor como moeda
+          onChangeText={(text) => setPrice2(formatCurrency(text))}
         />
       </View>
-
-      {/* Botões de Calcular e Limpar */}
-      <View style={styles.conversionButtonContainer}>
+            {/* Botões de Calcular e Limpar */}
+            <View style={styles.conversionButtonContainer}>
         <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
-          <Text style={styles.conversionButtonText}>Limpar</Text>
+          <Text style={styles.conversionButtonText}>CLean</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
-          <Text style={styles.conversionButtonText}>Calcular</Text>
+          <Text style={styles.conversionButtonText}>Calculate</Text>
         </TouchableOpacity>
       </View>
 
@@ -202,7 +201,7 @@ export default function ConversionScreen() {
           <Text style={styles.conversionResultMessage}>{result.message}</Text>
           {result.winner && (
             <Text style={styles.conversionResultWinner}>
-              {result.winner} é mais barato!
+              {result.winner} it's cheaper!
             </Text>
           )}
           {result.difference && (
