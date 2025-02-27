@@ -79,23 +79,23 @@ export default function ConversionScreen() {
     if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
       const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
 
-      if (pricePerUnit1 < pricePerUnit2) {
+      if (difference === "0.00") {
+        setResult({
+          message: `Both products have the same price.`,
+          winner: null,
+          difference: null,
+        });
+      } else if (pricePerUnit1 < pricePerUnit2) {
         setResult({
           message: `Product 1 is cheaper than Product 2 per ${unit1}`,
           winner: 'Product 1',
           difference: `Difference: $${difference} per ${unit1}`,
         });
-      } else if (pricePerUnit1 > pricePerUnit2) {
+      } else {
         setResult({
           message: `Product 2 is cheaper than Product 1 per ${unit2}`,
           winner: 'Product 2',
           difference: `Difference: $${difference} per ${unit2}`,
-        });
-      } else {
-        setResult({
-          message: `Both products have the same price per ${unit1}.`,
-          winner: null,
-          difference: null,
         });
       }
     } else {
