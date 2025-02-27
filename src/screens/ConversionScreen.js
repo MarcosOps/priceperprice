@@ -3,13 +3,25 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import styles from './styles'; // Importing styles
 
-const units = [
-  "ml", "L", "oz", "gal", "cm", "m", "inch", "ft", "mg", "g", "kg", "lb", "oz", "unit"
-];
+// Categorias de unidades
+const unitCategories = {
+  liquid: ["ml", "L", "oz", "gal"],
+  weight: ["mg", "g", "kg", "lb", "oz"],
+  quantity: ["unit"]
+};
 
-// Function to render text with different colors
+const units = [...unitCategories.liquid, ...unitCategories.weight, ...unitCategories.quantity];
+
+// Função para verificar se duas unidades estão na mesma categoria
+const areUnitsCompatible = (unit1, unit2) => {
+  const category1 = Object.keys(unitCategories).find(category => unitCategories[category].includes(unit1));
+  const category2 = Object.keys(unitCategories).find(category => unitCategories[category].includes(unit2));
+  return category1 === category2;
+};
+
+// Função para renderizar texto com cores diferentes
 const renderColoredText = (text) => {
-  const parts = text.split('Per'); // Split the text into parts
+  const parts = text.split('Per'); // Divide o texto em partes
   return parts.map((part, index) => {
     if (index < parts.length - 1) {
       return (
@@ -24,7 +36,7 @@ const renderColoredText = (text) => {
   });
 };
 
-// Function to format the value as currency
+// Função para formatar o valor como moeda
 const formatCurrency = (value) => {
   const numericValue = value.replace(/[^0-9]/g, '');
   const number = parseFloat(numericValue) / 100;
@@ -45,7 +57,7 @@ export default function ConversionScreen() {
 
   const [result, setResult] = useState('');
 
-  // Function to calculate price per unit
+  // Função para calcular o preço por unidade
   const calculatePricePerUnit = (quantity, price) => {
     if (quantity && price) {
       return parseFloat(price) / parseFloat(quantity);
@@ -53,20 +65,11 @@ export default function ConversionScreen() {
     return null;
   };
 
-  // Function to compare prices
+  // Função para comparar preços
   const comparePrices = () => {
-    if (unit1 === "unit" && unit2 !== "unit") {
+    if (!areUnitsCompatible(unit1, unit2)) {
       setResult({
-        message: 'The "unit" unit can only be compared with itself.',
-        winner: null,
-        difference: null,
-      });
-      return;
-    }
-
-    if (unit2 === "unit" && unit1 !== "unit") {
-      setResult({
-        message: 'The "unit" unit can only be compared with itself.',
+        message: 'Units are not compatible. Please compare liquid with liquid, weight with weight, or quantity with quantity.',
         winner: null,
         difference: null,
       });
@@ -79,9 +82,9 @@ export default function ConversionScreen() {
     if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
       const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
 
-      if (difference === "0.00") {
+      if (difference < 0.01) {
         setResult({
-          message: `Both products have the same price.`,
+          message: 'Both products have the same price.',
           winner: null,
           difference: null,
         });
@@ -107,7 +110,7 @@ export default function ConversionScreen() {
     }
   };
 
-  // Function to clear fields and result
+  // Função para limpar campos e resultado
   const clearFields = () => {
     setUnit1(units[0]);
     setQuantity1('');
@@ -120,7 +123,7 @@ export default function ConversionScreen() {
 
   return (
     <View style={styles.conversionContainer}>
-      {/* Title with "Per" in red */}
+      {/* Título com "Per" em vermelho */}
       <Text style={styles.conversionTitle}>
         {renderColoredText('PricePerPrice')}
       </Text>
@@ -184,10 +187,11 @@ export default function ConversionScreen() {
           onChangeText={(text) => setPrice2(formatCurrency(text))}
         />
       </View>
-            {/* Botões de Calcular e Limpar */}
-            <View style={styles.conversionButtonContainer}>
+
+      {/* Botões de Calcular e Limpar */}
+      <View style={styles.conversionButtonContainer}>
         <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
-          <Text style={styles.conversionButtonText}>CLean</Text>
+          <Text style={styles.conversionButtonText}>Clean</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
