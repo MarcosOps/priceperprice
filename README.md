@@ -51,7 +51,10 @@ Se quiser rodar no Android Emulator ou iOS Simulator:
 npx expo start --android  # Para Android
 npx expo start --ios      # Para iOS (somente no Mac)
 ```
-
+ou usar essa alias:
+```
+alias limpa-npx='rm -rf .expo; rm -rf node_modules; npm install; npx expo start'
+```
 
 ### ESTRUTURA  
 
