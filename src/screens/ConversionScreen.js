@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import styles from './styles';
+import styles from '../styles/styles';
 
 import ColoredTitle from '../components/ColoredTitle';
 import ProductInputGroup from '../components/ProductInputGroup';
