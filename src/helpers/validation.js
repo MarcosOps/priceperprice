@@ -1,7 +1,10 @@
 export const calculatePricePerUnit = (quantity, price) => {
-    if (!quantity || !price || parseFloat(quantity) === 0) {
-      return parseFloat(price) / parseFloat(quantity);
-    }
+  const qty = parseFloat(quantity);
+  const prc = parseFloat(price);
+
+  if (isNaN(qty) || isNaN(prc) || qty === 0) {
     return null;
-  };
-  
+  }
+
+  return prc / qty;
+};
