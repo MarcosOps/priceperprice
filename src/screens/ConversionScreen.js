@@ -27,25 +27,25 @@ export default function ConversionScreen() {
     const numericQuantity1 = parseFloat(quantity1);
     const numericQuantity2 = parseFloat(quantity2);
 
-    // Validar entradas
+        // Validar entradas
     if (isNaN(numericPrice1) || isNaN(numericPrice2) || 
         isNaN(numericQuantity1) || isNaN(numericQuantity2)) {
-      setResult({ message: 'Please enter valid values for quantity and price.' });
+      setResult({ error: 'INVALID_INPUT' });
       return;
     }
-
+  
     const product1 = {
       price: numericPrice1,
       quantity: numericQuantity1,
       unit: unit1
     };
-
+  
     const product2 = {
       price: numericPrice2,
       quantity: numericQuantity2,
       unit: unit2
     };
-
+  
     const comparisonResult = compareProducts(product1, product2);
     setResult(comparisonResult);
   };

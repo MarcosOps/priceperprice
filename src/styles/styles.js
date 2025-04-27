@@ -97,9 +97,10 @@ export default StyleSheet.create({
     fontSize: 18,
     color: '#000000', // Cor do texto preto
     textAlign: 'center',
+    marginTop: 10,
   },
   conversionResultWinner: {
-    fontSize: 20,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#28a745', // Verde para o vencedor
     marginTop: 10,
@@ -107,6 +108,6 @@ export default StyleSheet.create({
   conversionResultDifference: {
     fontSize: 16,
     color: '#000000', // Cor do texto preto
-    marginTop: 5,
+    marginTop: 10,
   },
 });

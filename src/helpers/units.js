@@ -58,7 +58,7 @@ export const compareProducts = (product1, product2) => {
   const { price: price2, quantity: quantity2, unit: unit2 } = product2;
   
   if (!areUnitsCompatible(unit1, unit2)) {
-    return { error: 'Units are not compatible. Please compare liquid with liquid, weight with weight, or quantity with quantity.' };
+    return { error: 'INCOMPATIBLE_UNITS' };
   }
   
   const baseUnit = getBaseUnit(unit1);
@@ -67,20 +67,21 @@ export const compareProducts = (product1, product2) => {
   const difference = Math.abs(basePrice1 - basePrice2);
   
   if (difference < 0.0001) {
-    return { message: `Both products have the same price per ${baseUnit}.` };
+    return { 
+      status: 'SAME_PRICE',
+      baseUnit,
+      basePrice1,
+      basePrice2
+    };
   }
   
-  const winner = basePrice1 < basePrice2 ? 'Product 1' : 'Product 2';
-  const loser = basePrice1 < basePrice2 ? 'Product 2' : 'Product 1';
-  const cheaperPrice = Math.min(basePrice1, basePrice2).toFixed(6);
-  const expensivePrice = Math.max(basePrice1, basePrice2).toFixed(6);
-  const differencePercentage = (difference / Math.max(basePrice1, basePrice2)) * 100;
-  
   return {
-    message: `Conclusion: ${winner} is cheaper, costing $${cheaperPrice}/${baseUnit} compared to ${loser} which costs $${expensivePrice}/${baseUnit}. (${differencePercentage.toFixed(2)}% cheaper)`,
-    winner,
-    difference: `Price difference: $${difference.toFixed(6)}/${baseUnit}`,
-    differencePercentage: `${differencePercentage.toFixed(2)}%`,
-    baseUnit
+    status: 'DIFFERENT_PRICE',
+    winner: basePrice1 < basePrice2 ? 'Product 1' : 'Product 2',
+    baseUnit,
+    cheaperPrice: Math.min(basePrice1, basePrice2),
+    expensivePrice: Math.max(basePrice1, basePrice2),
+    difference,
+    differencePercentage: (difference / Math.max(basePrice1, basePrice2)) * 100
   };
 };
