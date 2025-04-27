@@ -72,14 +72,15 @@ export const compareProducts = (product1, product2) => {
   
   const winner = basePrice1 < basePrice2 ? 'Product 1' : 'Product 2';
   const loser = basePrice1 < basePrice2 ? 'Product 2' : 'Product 1';
-  const differencePerBaseUnit = difference.toFixed(6);
+  const cheaperPrice = Math.min(basePrice1, basePrice2).toFixed(6);
+  const expensivePrice = Math.max(basePrice1, basePrice2).toFixed(6);
   const differencePercentage = (difference / Math.max(basePrice1, basePrice2)) * 100;
   
   return {
-    message: `${winner} is cheaper than ${loser} per ${baseUnit}`,
+    message: `Conclusion: ${winner} is cheaper, costing $${cheaperPrice}/${baseUnit} compared to ${loser} which costs $${expensivePrice}/${baseUnit}. (${differencePercentage.toFixed(2)}% cheaper)`,
     winner,
-    difference: `Difference: $${differencePerBaseUnit} per ${baseUnit}`,
-    differencePercentage: `(${differencePercentage.toFixed(2)}% cheaper)`,
+    difference: `Price difference: $${difference.toFixed(6)}/${baseUnit}`,
+    differencePercentage: `${differencePercentage.toFixed(2)}%`,
     baseUnit
   };
 };
