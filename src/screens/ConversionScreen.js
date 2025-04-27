@@ -6,9 +6,8 @@ import ColoredTitle from '../components/ColoredTitle';
 import ProductInputGroup from '../components/ProductInputGroup';
 import ResultDisplay from '../components/ResultDisplay';
 
-import { units, areUnitsCompatible } from '../helpers/units';
+import { units, compareProducts } from '../helpers/units';
 import { formatCurrency } from '../helpers/format';
-import { calculatePricePerUnit } from '../helpers/validation';
 
 export default function ConversionScreen() {
   const [unit1, setUnit1] = useState(units[0]);
@@ -22,37 +21,33 @@ export default function ConversionScreen() {
   const [result, setResult] = useState({});
 
   const comparePrices = () => {
-    if (!areUnitsCompatible(unit1, unit2)) {
-      setResult({
-        message: 'Units are not compatible. Please compare liquid with liquid, weight with weight, or quantity with quantity.',
-      });
+    // Limpar caracteres não numéricos dos preços
+    const numericPrice1 = parseFloat(price1.replace(/[^0-9.]/g, ''));
+    const numericPrice2 = parseFloat(price2.replace(/[^0-9.]/g, ''));
+    const numericQuantity1 = parseFloat(quantity1);
+    const numericQuantity2 = parseFloat(quantity2);
+
+    // Validar entradas
+    if (isNaN(numericPrice1) || isNaN(numericPrice2) || 
+        isNaN(numericQuantity1) || isNaN(numericQuantity2)) {
+      setResult({ message: 'Please enter valid values for quantity and price.' });
       return;
     }
 
-    const pricePerUnit1 = calculatePricePerUnit(quantity1, price1.replace(/[^0-9.]/g, ''));
-    const pricePerUnit2 = calculatePricePerUnit(quantity2, price2.replace(/[^0-9.]/g, ''));
+    const product1 = {
+      price: numericPrice1,
+      quantity: numericQuantity1,
+      unit: unit1
+    };
 
-    if (pricePerUnit1 !== null && pricePerUnit2 !== null) {
-      const difference = Math.abs(pricePerUnit1 - pricePerUnit2).toFixed(2);
+    const product2 = {
+      price: numericPrice2,
+      quantity: numericQuantity2,
+      unit: unit2
+    };
 
-      if (difference < 0.01) {
-        setResult({ message: 'Both products have the same price.' });
-      } else if (pricePerUnit1 < pricePerUnit2) {
-        setResult({
-          message: `Product 1 is cheaper than Product 2 per ${unit1}`,
-          winner: 'Product 1',
-          difference: `Difference: $${difference} per ${unit1}`,
-        });
-      } else {
-        setResult({
-          message: `Product 2 is cheaper than Product 1 per ${unit2}`,
-          winner: 'Product 2',
-          difference: `Difference: $${difference} per ${unit2}`,
-        });
-      }
-    } else {
-      setResult({ message: 'Please enter valid values for quantity and price.' });
-    }
+    const comparisonResult = compareProducts(product1, product2);
+    setResult(comparisonResult);
   };
 
   const clearFields = () => {
