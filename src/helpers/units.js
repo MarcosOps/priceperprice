@@ -50,6 +50,12 @@ export const getBaseUnit = (unit) => {
 
 export const calculateBasePrice = (price, quantity, unit) => {
   const baseQuantity = convertToBaseUnit(quantity, unit);
+  
+  // Prevent division by zero
+  if (baseQuantity === 0) {
+    throw new Error('Quantity cannot be zero');
+  }
+  
   return price / baseQuantity;
 };
 

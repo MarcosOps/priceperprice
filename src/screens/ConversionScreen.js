@@ -26,15 +26,19 @@ export default function ConversionScreen() {
       Keyboard.dismiss();
     }
     
-    // Limpar caracteres não numéricos dos preços
-    const numericPrice1 = parseFloat(price1.replace(/[^0-9.]/g, ''));
-    const numericPrice2 = parseFloat(price2.replace(/[^0-9.]/g, ''));
+    // Parse prices - remove currency symbols and keep only numbers
+    // Since formatCurrency divides by 100, we need to multiply by 100 here
+    const numericPrice1 = (parseFloat(price1.replace(/[^0-9]/g, '')) || 0) / 100;
+    const numericPrice2 = (parseFloat(price2.replace(/[^0-9]/g, '')) || 0) / 100;
+    
+    // Parse quantities
     const numericQuantity1 = parseFloat(quantity1);
     const numericQuantity2 = parseFloat(quantity2);
 
         // Validar entradas
     if (isNaN(numericPrice1) || isNaN(numericPrice2) || 
-        isNaN(numericQuantity1) || isNaN(numericQuantity2)) {
+        isNaN(numericQuantity1) || isNaN(numericQuantity2) ||
+        numericQuantity1 <= 0 || numericQuantity2 <= 0) {
       setResult({ error: 'INVALID_INPUT' });
       return;
     }

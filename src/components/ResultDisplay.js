@@ -8,6 +8,16 @@ export default function ResultDisplay({ result }) {
   const formatPrice = (price) => price.toFixed(6);
   const formatPercentage = (percentage) => percentage.toFixed(2);
 
+  if (result.error === 'INVALID_INPUT') {
+    return (
+      <View style={styles.conversionResultContainer}>
+        <Text style={styles.conversionResultMessage}>
+          Please enter valid prices and quantities. Quantities must be greater than zero.
+        </Text>
+      </View>
+    );
+  }
+
   if (result.error === 'INCOMPATIBLE_UNITS') {
     return (
       <View style={styles.conversionResultContainer}>
