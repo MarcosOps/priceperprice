@@ -1,17 +1,35 @@
-## 
+# PricePerPrice App
+
+A React Native app that helps users compare product prices based on different units of measurement.
+
+## Project Structure
 
 ```
 priceperprice/
-├── src/
-│   ├── screens/        # Telas do app
-│   │   ├── HomeScreen.js
-│   │   ├── CategoryScreen.js
-│   │   ├── ComparisonScreen.js
-│   ├── components/     # Componentes reutilizáveis
-│   ├── App.js          # Arquivo principal do app
-│   ├── navigation/     # Sistema de navegação
-│   │   ├── StackNavigator.js
-├── package.json        # Dependências do projeto
+├── App.js                  # Entry point that loads the main app component
+├── README.md               # Project documentation
+├── app.json                # Expo configuration file
+├── flow/                   # Flow diagrams and planning files
+│   ├── phase_1.png         # Visual diagram of phase 1 implementation
+│   └── phase_1.py          # Python script for planning
+├── navigation/             # Legacy navigation folder (not in use)
+│   └── StackNavigator.js   # Legacy navigation configuration
+├── package-lock.json       # NPM dependency lock file
+├── package.json            # Project dependencies and scripts
+└── src/                    # Main source code directory
+    ├── components/         # Reusable UI components
+    │   ├── ColoredTitle.js # Component for styled title text
+    │   ├── ProductInputGroup.js # Component for product input fields (price, quantity, unit)
+    │   └── ResultDisplay.js # Component for displaying comparison results
+    ├── helpers/            # Utility functions and constants
+    │   ├── format.js       # Functions for formatting currency and numbers
+    │   ├── units.js        # Unit conversion definitions and comparison logic
+    │   └── validation.js   # Input validation functions
+    ├── screens/            # App screens
+    │   ├── ConversionScreen.js # Main screen for price comparison
+    │   └── SplashScreen.js # Initial loading screen
+    └── styles/             # Style definitions
+        └── styles.js       # Global styles for the app
 ```
 
 ### Para rodar o PricePerPrice (PPP) no seu ambiente de desenvolvimento usando Visual Studio Code, siga os passos abaixo:
@@ -128,3 +146,114 @@ Melhorias Futuras
     Tempo de Exibição:
 
         Ajuste o tempo de exibição da tela de apresentação conforme necessário.
+
+## Key Files Documentation
+
+### Core Files
+
+#### `src/helpers/units.js`
+Contains all unit conversion logic and product comparison functionality:
+- `unitConversionRates`: Defines conversion factors for all supported units (volume, weight, quantity, area)
+- `unitCategories`: Groups units by category for compatibility checking
+- `units`: Exports all available units as a flat array
+- `areUnitsCompatible`: Checks if two units can be compared (same category)
+- `convertToBaseUnit`: Converts a value from one unit to its base unit
+- `calculateBasePrice`: Calculates price per base unit for comparison
+- `compareProducts`: Core function that compares two products and determines which is cheaper
+
+#### `src/components/ProductInputGroup.js`
+Handles user input for product comparison:
+- Renders unit selection (custom modal picker for iOS, native picker for Android)
+- Manages quantity and price inputs with proper formatting
+- Handles platform-specific UI differences between iOS and Android
+
+#### `src/components/ResultDisplay.js`
+Displays the comparison results:
+- Shows which product is cheaper and by what percentage
+- Formats price differences and base unit prices
+- Handles different result states (incompatible units, invalid input, same price)
+
+#### `src/helpers/format.js`
+Contains formatting utilities:
+- `formatCurrency`: Formats numeric values as currency with proper symbols
+
+#### `src/screens/ConversionScreen.js`
+Main screen of the application:
+- Manages state for product inputs (unit, quantity, price)
+- Handles comparison logic and result display
+- Implements keyboard dismissal and other UI interactions
+
+### Configuration Files
+
+#### `package.json`
+Contains project metadata and dependencies:
+- Expo SDK version (currently 53.0.0)
+- React and React Native versions
+- Other dependencies for UI components and functionality
+
+#### `app.json`
+Expo configuration file:
+- Defines the entry point for the application
+
+## Supported Units
+
+The app currently supports the following unit categories:
+
+### Volume
+- ml (milliliter) - base unit
+- L (liter) - 1 L = 1000 ml
+- oz (fluid ounce) - 1 oz = 29.5735 ml
+- gal (gallon) - 1 gal = 3785.41 ml
+
+### Weight
+- g (gram) - base unit
+- mg (milligram) - 1 mg = 0.001 g
+- kg (kilogram) - 1 kg = 1000 g
+- lb (pound) - 1 lb = 453.592 g
+- oz (weight) - 1 oz = 28.3495 g
+
+### Quantity
+- unit - base unit
+
+### Area
+- cm² (square centimeter) - base unit
+- in² (square inch) - 1 in² = 6.4516 cm²
+- ft² (square foot) - 1 ft² = 929.03 cm²
+- yd² (square yard) - 1 yd² = 8361.27 cm²
+- m² (square meter) - 1 m² = 10000 cm²
+- acre - 1 acre = 40468564.224 cm²
+- hectare - 1 hectare = 100000000 cm²
+
+## Recent Improvements
+
+### SDK Compatibility Update
+- Updated Expo SDK from version 52 to 53 to ensure compatibility with the latest Expo Go app
+- Updated related dependencies to maintain compatibility:
+  - React from 18.3.1 to 19.0.0
+  - React Native from 0.76.7 to 0.79.3
+  - Other related packages to their compatible versions
+
+### iOS-Specific Enhancements
+- Implemented a custom picker for iOS that shows a modal with unit options for better user experience
+- Added keyboard dismissal functionality when tapping outside inputs or pressing buttons
+- Adjusted button positioning and layout for better iOS display
+- Fixed styling issues specific to iOS devices
+
+### Unit Conversion Improvements
+- Added area units for comparison:
+  - Square centimeters (cm²), square inches (in²), square feet (ft²)
+  - Square yards (yd²), square meters (m²)
+  - Larger area units: acres and hectares
+- Ensured proper conversion factors between all units
+- Improved validation to prevent division by zero errors
+
+### UI and UX Improvements
+- Enhanced result display with clearer percentage difference explanation
+- Improved error messages for invalid inputs and incompatible units
+- Fixed currency formatting and calculation issues
+- Added platform-specific optimizations for both Android and iOS
+
+### Documentation
+- Updated project documentation with detailed explanations of each file and component
+- Added comprehensive unit conversion reference
+- Documented the project structure and key files
