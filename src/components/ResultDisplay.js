@@ -32,7 +32,7 @@ export default function ResultDisplay({ result }) {
     return (
       <View style={styles.conversionResultContainer}>
         <Text style={styles.conversionResultWinner}>
-          {result.winner} it's cheaper!
+          {result.winner} is cheaper!
         </Text>
 
         <Text style={styles.conversionResultMessage}>

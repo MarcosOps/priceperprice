@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 
 export default StyleSheet.create({
     // Estilos para a SplashScreen
@@ -40,13 +40,17 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   conversionPicker: {
-    height: 50,
+    height: Platform.OS === 'ios' ? 100 : 50,
     width: '100%',
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     backgroundColor: '#FFFFFF', // Fundo branco para o Picker
+    ...(Platform.OS === 'ios' && {
+      marginTop: 10,
+      paddingHorizontal: 10,
+    }),
   },
   conversionInput: {
     height: 40,
@@ -61,7 +65,7 @@ export default StyleSheet.create({
   conversionButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //marginTop: 20,
+    ...(Platform.OS === 'ios' ? { marginTop: -10 } : {}),
   },
   conversionCalculateButton: {
     backgroundColor: '#007BFF',
@@ -109,5 +113,72 @@ export default StyleSheet.create({
     fontSize: 16,
     color: '#000000', // Cor do texto preto
     marginTop: 10,
+  },
+  
+  // iOS Picker styles
+  iosPicker: {
+    height: 50,
+    width: '100%',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  },
+  iosPickerText: {
+    fontSize: 16,
+    color: '#000000',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    maxHeight: '70%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#000000',
+  },
+  modalItem: {
+    paddingVertical: 12,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+    width: '100%',
+  },
+  modalItemSelected: {
+    backgroundColor: '#f0f0f0',
+  },
+  modalItemText: {
+    fontSize: 16,
+    color: '#000000',
+  },
+  modalItemTextSelected: {
+    fontWeight: 'bold',
+    color: '#007BFF',
+  },
+  modalCloseButton: {
+    marginTop: 20,
+    backgroundColor: '#007BFF',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  modalCloseButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
