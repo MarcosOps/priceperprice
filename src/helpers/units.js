@@ -14,18 +14,29 @@ export const unitConversionRates = {
 
   // Quantidade
   unit: { base: 'unit', factor: 1 },
+  
+  // Area
+  'cm²': { base: 'cm²', factor: 1 },
+  'in²': { base: 'cm²', factor: 6.4516 },
+  'ft²': { base: 'cm²', factor: 929.03 },
+  'yd²': { base: 'cm²', factor: 8361.27 },
+  'm²': { base: 'cm²', factor: 10000 },
+  'acre': { base: 'cm²', factor: 40468564.224 },
+  'hectare': { base: 'cm²', factor: 100000000 },
 };
 
 export const unitCategories = {
   liquid: ["ml", "L", "oz", "gal"],
   weight: ["mg", "g", "kg", "lb", "oz (weight)"],
-  quantity: ["unit"]
+  quantity: ["unit"],
+  area: ["cm²", "in²", "ft²", "yd²", "m²", "acre", "hectare"]
 };
 
 export const units = [
   ...unitCategories.liquid,
   ...unitCategories.weight,
-  ...unitCategories.quantity
+  ...unitCategories.quantity,
+  ...unitCategories.area
 ];
 
 export const areUnitsCompatible = (unit1, unit2) => {

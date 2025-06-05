@@ -50,7 +50,7 @@ export default function ResultDisplay({ result }) {
         </Text>
         
         <Text style={styles.conversionResultDifference}>
-          Price difference: ${formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}% cheaper)
+          Price difference: ${formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}% cheaper than the more expensive option)
         </Text>
       </View>
     );
