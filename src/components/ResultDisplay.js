@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import styles from '../styles/styles';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations/translations';
 
 export default function ResultDisplay({ result }) {
+  const { currentLanguage } = useLanguage();
+  const lang = currentLanguage.code;
+  
   if (!result) return null;
 
   const formatPrice = (price) => price.toFixed(6);
@@ -12,7 +17,7 @@ export default function ResultDisplay({ result }) {
     return (
       <View style={styles.conversionResultContainer}>
         <Text style={styles.conversionResultMessage}>
-          Please enter valid prices and quantities. Quantities must be greater than zero.
+          {getTranslation(lang, 'invalidInput')}
         </Text>
       </View>
     );
@@ -32,25 +37,36 @@ export default function ResultDisplay({ result }) {
     return (
       <View style={styles.conversionResultContainer}>
         <Text style={styles.conversionResultMessage}>
-          Both products have the same price per {result.baseUnit}.
+          {getTranslation(lang, 'samePrice')}
         </Text>
       </View>
     );
   }
 
   if (result.status === 'DIFFERENT_PRICE') {
+    const product1Label = getTranslation(lang, 'product1');
+    const product2Label = getTranslation(lang, 'product2');
+    const winnerLabel = result.winner === 'Product 1' ? product1Label : product2Label;
+    const loserLabel = result.winner === 'Product 1' ? product2Label : product1Label;
+    
     return (
       <View style={styles.conversionResultContainer}>
-        <Text style={styles.conversionResultWinner}>
-          {result.winner} is cheaper!
+        <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+          <Text style={styles.conversionResultWinner}>
+            {getTranslation(lang, 'betterValue')}: {winnerLabel}
+          </Text>
+        </View>
+
+        <Text style={styles.conversionResultMessage}>
+          {winnerLabel} {getTranslation(lang, 'cheaper')} {loserLabel}
         </Text>
 
         <Text style={styles.conversionResultMessage}>
-          {result.winner} is cheaper, costing ${formatPrice(result.cheaperPrice)}/{result.baseUnit} compared to {result.winner === 'Product 1' ? 'Product 2' : 'Product 1'} which costs ${formatPrice(result.expensivePrice)}/{result.baseUnit}.
+          {getTranslation(lang, 'pricePerUnit')}: ${formatPrice(result.cheaperPrice)}/{result.baseUnit} vs ${formatPrice(result.expensivePrice)}/{result.baseUnit}
         </Text>
-        
+
         <Text style={styles.conversionResultDifference}>
-          Price difference: ${formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}% cheaper than the more expensive option)
+          ${formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}%)
         </Text>
       </View>
     );

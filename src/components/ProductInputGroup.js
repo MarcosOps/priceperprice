@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { View, TextInput, Platform, TouchableOpacity, Text, Modal, FlatList } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import styles from '../styles/styles';
-import { units } from '../helpers/units';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations/translations';
+import { getTranslatedUnits } from '../helpers/translatedUnits';
 
 export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity, price, setPrice, formatCurrency }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const { currentLanguage } = useLanguage();
+  const lang = currentLanguage.code;
+  const units = getTranslatedUnits(lang);
 
   const renderAndroidPicker = () => (
     <Picker
@@ -36,7 +41,7 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Select Unit</Text>
+            <Text style={styles.modalTitle}>{getTranslation(lang, 'unit')}</Text>
             <FlatList
               data={units}
               keyExtractor={(item) => item}
@@ -64,7 +69,7 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
               style={styles.modalCloseButton}
               onPress={() => setModalVisible(false)}
             >
-              <Text style={styles.modalCloseButtonText}>Close</Text>
+              <Text style={styles.modalCloseButtonText}>{getTranslation(lang, 'clean')}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -77,7 +82,7 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
       {Platform.OS === 'ios' ? renderIOSPicker() : renderAndroidPicker()}
       <TextInput
         style={styles.conversionInput}
-        placeholder="Quantity"
+        placeholder={getTranslation(lang, 'quantity')}
         placeholderTextColor="#666"
         keyboardType="numeric"
         value={quantity}
@@ -87,7 +92,7 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
       />
       <TextInput
         style={styles.conversionInput}
-        placeholder="Price"
+        placeholder={getTranslation(lang, 'price')}
         placeholderTextColor="#666"
         keyboardType="numeric"
         value={price}

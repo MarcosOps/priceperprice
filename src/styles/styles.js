@@ -23,12 +23,19 @@ export default StyleSheet.create({
     padding: 40,
     backgroundColor: '#FFFF00', // Fundo amarelo
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    position: 'relative',
+    width: '100%',
+  },
   conversionTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
     color: '#000000', // Cor do texto preto
+    textAlign: 'center',
   },
   conversionLabel: {
     fontSize: 18,
@@ -104,10 +111,11 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   conversionResultWinner: {
-    fontSize: 30,
+    fontSize: Platform.OS === 'ios' ? 24 : 30,
     fontWeight: 'bold',
     color: '#28a745', // Verde para o vencedor
     marginTop: 10,
+    flexWrap: 'wrap',
   },
   conversionResultDifference: {
     fontSize: 16,

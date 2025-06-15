@@ -5,11 +5,19 @@ import styles from '../styles/styles';
 import ColoredTitle from '../components/ColoredTitle';
 import ProductInputGroup from '../components/ProductInputGroup';
 import ResultDisplay from '../components/ResultDisplay';
+import LanguageSelector from '../components/LanguageSelector';
 
-import { units, compareProducts } from '../helpers/units';
 import { formatCurrency } from '../helpers/format';
+import { useLanguage } from '../context/LanguageContext';
+import { getTranslation } from '../translations/translations';
+import { getTranslatedUnits, compareProducts } from '../helpers/translatedUnits';
 
 export default function ConversionScreen() {
+  const { currentLanguage } = useLanguage();
+  const lang = currentLanguage.code;
+  
+  const units = getTranslatedUnits(lang);
+
   const [unit1, setUnit1] = useState(units[0]);
   const [quantity1, setQuantity1] = useState('');
   const [price1, setPrice1] = useState('');
@@ -55,7 +63,7 @@ export default function ConversionScreen() {
       unit: unit2
     };
   
-    const comparisonResult = compareProducts(product1, product2);
+    const comparisonResult = compareProducts(product1, product2, lang);
     setResult(comparisonResult);
   };
 
@@ -77,11 +85,16 @@ export default function ConversionScreen() {
   return (
     <TouchableWithoutFeedback onPress={() => Platform.OS === 'ios' && Keyboard.dismiss()}>
     <View style={styles.conversionContainer}>
-      <Text style={styles.conversionTitle}>
-        <ColoredTitle text="PricePerPrice" />
-      </Text>
+      <View style={styles.headerContainer}>
+        <Text style={styles.conversionTitle}>
+          <ColoredTitle text="PricePerPrice" />
+        </Text>
+        <View style={{ position: 'absolute', right: 0 }}>
+          <LanguageSelector />
+        </View>
+      </View>
 
-      <Text style={styles.conversionLabel}>Product 1</Text>
+      <Text style={styles.conversionLabel}>{getTranslation(lang, 'product1')}</Text>
       <ProductInputGroup
         unit={unit1} setUnit={setUnit1}
         quantity={quantity1} setQuantity={setQuantity1}
@@ -89,7 +102,7 @@ export default function ConversionScreen() {
         formatCurrency={formatCurrency}
       />
 
-      <Text style={styles.conversionLabel}>Product 2</Text>
+      <Text style={styles.conversionLabel}>{getTranslation(lang, 'product2')}</Text>
       <ProductInputGroup
         unit={unit2} setUnit={setUnit2}
         quantity={quantity2} setQuantity={setQuantity2}
@@ -99,11 +112,11 @@ export default function ConversionScreen() {
 
       <View style={styles.conversionButtonContainer}>
         <TouchableOpacity style={styles.conversionClearButton} onPress={clearFields}>
-          <Text style={styles.conversionButtonText}>Clean</Text>
+          <Text style={styles.conversionButtonText}>{getTranslation(lang, 'clean')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.conversionCalculateButton} onPress={comparePrices}>
-          <Text style={styles.conversionButtonText}>Calculate</Text>
+          <Text style={styles.conversionButtonText}>{getTranslation(lang, 'calculate')}</Text>
         </TouchableOpacity>
       </View>
 
