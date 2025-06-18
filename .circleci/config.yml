@@ -35,7 +35,7 @@ jobs:
           name: Configure EAS
           command: |
             echo "Creating eas.json configuration"
-            cat > eas.json << 'EOL'
+            cat > eas.json \<< 'EOL'
             {
               "build": {
                 "development": {
@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Update app.json
           command: |
-            cat > app.json << 'EOL'
+            cat > app.json \<< 'EOL'
             {
               "expo": {
                 "name": "PricePerPrice",
