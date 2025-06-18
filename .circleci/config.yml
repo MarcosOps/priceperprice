@@ -1,0 +1,145 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/android:2023.08-node
+    
+    working_directory: ~/repo
+    
+    steps:
+      - checkout
+      
+      # Restore cached dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      
+      # Install dependencies
+      - run:
+          name: Install dependencies
+          command: |
+            npm install
+            npm install -g eas-cli
+            npm install -g expo-cli
+      
+      # Save cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      
+      # Configure EAS
+      - run:
+          name: Configure EAS
+          command: |
+            echo "Creating eas.json configuration"
+            cat > eas.json << 'EOL'
+            {
+              "build": {
+                "development": {
+                  "developmentClient": true,
+                  "distribution": "internal"
+                },
+                "preview": {
+                  "distribution": "internal",
+                  "android": {
+                    "buildType": "apk"
+                  }
+                },
+                "production": {
+                  "android": {
+                    "buildType": "apk"
+                  }
+                }
+              }
+            }
+            EOL
+      
+      # Update app.json with required fields for building
+      - run:
+          name: Update app.json
+          command: |
+            cat > app.json << 'EOL'
+            {
+              "expo": {
+                "name": "PricePerPrice",
+                "slug": "priceperprice",
+                "version": "1.0.0",
+                "orientation": "portrait",
+                "icon": "./assets/icon.png",
+                "userInterfaceStyle": "light",
+                "entryPoint": "./components/App.js",
+                "splash": {
+                  "image": "./assets/splash.png",
+                  "resizeMode": "contain",
+                  "backgroundColor": "#ffffff"
+                },
+                "assetBundlePatterns": [
+                  "**/*"
+                ],
+                "ios": {
+                  "supportsTablet": true
+                },
+                "android": {
+                  "adaptiveIcon": {
+                    "foregroundImage": "./assets/adaptive-icon.png",
+                    "backgroundColor": "#ffffff"
+                  },
+                  "package": "com.marcosops.priceperprice"
+                },
+                "plugins": [
+                  "expo-asset"
+                ]
+              }
+            }
+            EOL
+      
+      # Create assets directory if it doesn't exist
+      - run:
+          name: Create assets directory
+          command: |
+            mkdir -p assets
+            # Create placeholder images if they don't exist
+            convert -size 1024x1024 xc:white assets/icon.png || echo "Skipping icon creation"
+            convert -size 1242x2436 xc:white assets/splash.png || echo "Skipping splash creation"
+            convert -size 1024x1024 xc:white assets/adaptive-icon.png || echo "Skipping adaptive icon creation"
+      
+      # Install ImageMagick for creating placeholder images
+      - run:
+          name: Install ImageMagick
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y imagemagick
+      
+      # Create placeholder images
+      - run:
+          name: Create placeholder images
+          command: |
+            mkdir -p assets
+            convert -size 1024x1024 xc:white assets/icon.png
+            convert -size 1242x2436 xc:white assets/splash.png
+            convert -size 1024x1024 xc:white assets/adaptive-icon.png
+      
+      # Build APK
+      - run:
+          name: Build APK
+          command: |
+            npx eas-cli build --platform android --profile preview --local --non-interactive --output=./build/app.apk
+      
+      # Store APK as artifact
+      - store_artifacts:
+          path: ./build/app.apk
+          destination: app.apk
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - main
+                - /^AB#.*/

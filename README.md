@@ -1,6 +1,6 @@
 # PricePerPrice
 
-A React Native app for comparing product prices based on quantity and unit.
+A React Native app built with Expo.
 
 ## Features
 
@@ -13,68 +13,70 @@ A React Native app for comparing product prices based on quantity and unit.
   - French (🇫🇷)
 - Language selection with country flags
 - Persistent language preference using AsyncStorage
-
-## Installation
-
-```bash
-# Install dependencies
-npm install
-```
-
-## Running the App
-
-Simply run:
-
-```bash
-npx expo start
-```
-
-This will:
-1. Apply necessary fixes for dependencies
-2. Start the Expo development server
-3. Allow you to run the app on iOS, Android, or web
-
-## Troubleshooting
-
-If you encounter any issues with the app, you can try:
-
-```bash
-# Reset the app (clean dependencies and restart)
-npm run reset
-```
-
-This will:
-1. Remove the .expo directory
-2. Remove node_modules
-3. Remove package-lock.json
-4. Reinstall dependencies
-5. Apply the expo-asset fix
-6. Start the Expo development server
-
 ## Project Structure
 
 ```
 priceperprice/
 ├── src/
 │   ├── screens/        # App screens
-│   │   ├── SplashScreen.js
-│   │   ├── ConversionScreen.js
+│   │   ├── HomeScreen.js
+│   │   ├── CategoryScreen.js
+│   │   ├── ComparisonScreen.js
 │   ├── components/     # Reusable components
-│   │   ├── ColoredTitle.js
-│   │   ├── ProductInputGroup.js
-│   │   ├── ResultDisplay.js
-│   │   ├── LanguageSelector.js
-│   ├── context/        # React Context
-│   │   ├── LanguageContext.js
-│   ├── translations/   # Language translations
-│   │   ├── translations.js
-│   ├── helpers/        # Helper functions
-│   │   ├── units.js
-│   │   ├── translatedUnits.js
-│   │   ├── format.js
-│   ├── styles/         # Styles
-│   │   ├── styles.js
-├── navigation/         # Navigation system
-│   ├── StackNavigator.js
-├── App.js              # Main app file
+│   ├── App.js          # Main app file
+│   ├── navigation/     # Navigation system
+│   │   ├── StackNavigator.js
 ├── package.json        # Project dependencies
+```
+
+## Development
+
+To start the development server:
+
+```bash
+npm start
+```
+
+To run on Android:
+
+```bash
+npm run android
+```
+
+To run on iOS:
+
+```bash
+npm run ios
+```
+
+## CircleCI Pipeline
+
+This project includes a CircleCI pipeline that builds an Android APK and stores it as an artifact in CircleCI.
+
+### How it works
+
+1. The pipeline uses the `cimg/android:2023.08-node` Docker image, which includes Node.js and Android SDK.
+2. It installs dependencies, including Expo CLI and EAS CLI.
+3. It configures EAS to build the APK locally.
+4. It creates placeholder images for the app icon and splash screen.
+5. It builds the APK using EAS CLI.
+6. It stores the APK as an artifact in CircleCI.
+
+### How to use
+
+1. Push your code to GitHub.
+2. Connect your GitHub repository to CircleCI.
+3. CircleCI will automatically build the APK when you push to the repository.
+4. You can download the APK from the Artifacts tab in the CircleCI dashboard.
+
+### Customization
+
+You can customize the build process by modifying the following files:
+
+- `.circleci/config.yml`: CircleCI configuration
+- `eas.json`: EAS build configuration
+- `app.json`: Expo app configuration
+
+## License
+
+ISC
