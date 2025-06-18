@@ -55,8 +55,8 @@ This project includes a CircleCI pipeline that builds an Android APK and stores 
 
 ### How it works
 
-1. The pipeline uses the `cimg/android:2023.08-node` Docker image, which includes Node.js and Android SDK.
-2. It installs dependencies, including Expo CLI and EAS CLI.
+1. The pipeline uses the `cimg/android:2024.01-node` Docker image, which includes Node.js 18.18+ and Android SDK.
+2. It installs dependencies, including Expo CLI and EAS CLI as dev dependencies.
 3. It configures EAS to build the APK locally.
 4. It creates placeholder images for the app icon and splash screen.
 5. It builds the APK using EAS CLI.
@@ -76,6 +76,22 @@ You can customize the build process by modifying the following files:
 - `.circleci/config.yml`: CircleCI configuration
 - `eas.json`: EAS build configuration
 - `app.json`: Expo app configuration
+
+### Testing Locally
+
+You can test the CircleCI configuration locally using the provided scripts:
+
+1. Using the CircleCI CLI:
+   ```bash
+   ./test-circleci-config.sh
+   ```
+
+2. Using Docker (more accurate simulation):
+   ```bash
+   ./test-with-docker.sh
+   ```
+
+For more detailed instructions, see the `CIRCLECI_SETUP.md` file.
 
 ## License
 

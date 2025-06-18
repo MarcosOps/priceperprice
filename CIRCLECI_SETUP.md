@@ -52,17 +52,36 @@ If the build fails with a "No such file or directory" error, it might be because
 1. Created the assets directory: `mkdir -p assets`
 2. Added placeholder images for icon.png, splash.png, and adaptive-icon.png
 
-### Build Fails with "Command not found"
+### Node.js Version Issues
 
-If the build fails with a "Command not found" error, it might be because some required tools are not installed. Make sure the CircleCI configuration includes all necessary tools:
+If you encounter warnings about unsupported Node.js engine versions, make sure you're using a compatible version:
+
+```
+npm WARN EBADENGINE Unsupported engine {
+  package: 'metro@0.82.4',
+  required: { node: '>=18.18' },
+  current: { node: 'v18.17.0', npm: '9.6.7' }
+}
+```
+
+The CircleCI configuration uses the `cimg/android:2024.01-node` Docker image, which includes a compatible Node.js version.
+
+### Permission Issues
+
+If you encounter permission errors when installing global npm packages, install them locally instead:
 
 ```yaml
 - run:
     name: Install dependencies
     command: |
       npm install
-      npm install -g eas-cli
-      npm install -g expo-cli
+      npm install --save-dev eas-cli expo-cli
+```
+
+Then use `npx` to run the commands:
+
+```bash
+npx eas-cli build --platform android --profile preview --local --non-interactive --output=./build/app.apk
 ```
 
 ### APK Not Generated
@@ -75,6 +94,8 @@ If the APK is not generated, check the build logs for errors. Common issues incl
 
 ## Testing the CircleCI Configuration Locally
 
+### Using the CircleCI CLI
+
 You can test the CircleCI configuration locally using the CircleCI CLI:
 
 1. Install the CircleCI CLI: `brew install circleci`
@@ -86,6 +107,23 @@ Alternatively, you can use the provided script:
 ```bash
 ./test-circleci-config.sh
 ```
+
+### Using Docker
+
+For a more accurate simulation of the CircleCI environment, you can use Docker:
+
+```bash
+./test-with-docker.sh
+```
+
+This script:
+1. Creates a Docker container that mimics the CircleCI environment
+2. Copies your project files into the container
+3. Installs dependencies
+4. Creates placeholder images
+5. Builds the APK using EAS CLI
+
+This approach provides a more isolated and consistent environment for testing, which can help identify issues that might not appear when testing with the CircleCI CLI.
 
 ## Additional Resources
 

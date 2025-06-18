@@ -10,6 +10,17 @@ if ! command -v circleci &> /dev/null; then
     exit 1
 fi
 
+# Check Node.js version
+NODE_VERSION=$(node -v | cut -d 'v' -f 2)
+REQUIRED_VERSION="18.18.0"
+
+if [ "$(printf '%s\n' "$REQUIRED_VERSION" "$NODE_VERSION" | sort -V | head -n1)" != "$REQUIRED_VERSION" ]; then
+    echo "Warning: Your Node.js version ($NODE_VERSION) is older than the required version ($REQUIRED_VERSION)."
+    echo "This might cause compatibility issues with some packages."
+    echo "Consider upgrading your Node.js version using nvm or another version manager."
+    echo ""
+fi
+
 # Validate the CircleCI configuration
 echo "Validating CircleCI configuration..."
 circleci config validate .circleci/config.yml
