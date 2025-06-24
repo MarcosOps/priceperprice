@@ -10,7 +10,7 @@ export default function ResultDisplay({ result }) {
   
   if (!result) return null;
 
-  const formatPrice = (price) => price.toFixed(6);
+  const formatPrice = (price) => price.toFixed(2);
   const formatPercentage = (percentage) => percentage.toFixed(2);
 
   if (result.error === 'INVALID_INPUT') {

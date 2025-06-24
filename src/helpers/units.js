@@ -67,7 +67,8 @@ export const calculateBasePrice = (price, quantity, unit) => {
     throw new Error('Quantity cannot be zero');
   }
   
-  return price / baseQuantity;
+  // Round to 2 decimal places
+  return Math.round((price / baseQuantity) * 100) / 100;
 };
 
 export const compareProducts = (product1, product2) => {
@@ -87,8 +88,8 @@ export const compareProducts = (product1, product2) => {
     return { 
       status: 'SAME_PRICE',
       baseUnit,
-      basePrice1,
-      basePrice2
+      basePrice1: Math.round(basePrice1 * 100) / 100,
+      basePrice2: Math.round(basePrice2 * 100) / 100
     };
   }
   
@@ -96,9 +97,9 @@ export const compareProducts = (product1, product2) => {
     status: 'DIFFERENT_PRICE',
     winner: basePrice1 < basePrice2 ? 'Product 1' : 'Product 2',
     baseUnit,
-    cheaperPrice: Math.min(basePrice1, basePrice2),
-    expensivePrice: Math.max(basePrice1, basePrice2),
-    difference,
-    differencePercentage: (difference / Math.max(basePrice1, basePrice2)) * 100
+    cheaperPrice: Math.round(Math.min(basePrice1, basePrice2) * 100) / 100,
+    expensivePrice: Math.round(Math.max(basePrice1, basePrice2) * 100) / 100,
+    difference: Math.round(difference * 100) / 100,
+    differencePercentage: Math.round((difference / Math.max(basePrice1, basePrice2)) * 100 * 100) / 100
   };
 };
