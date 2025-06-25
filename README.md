@@ -23,6 +23,8 @@ npm install
 
 ## Running the App
 
+### Using Expo Go
+
 Simply run:
 
 ```bash
@@ -34,9 +36,25 @@ This will:
 2. Start the Expo development server
 3. Allow you to run the app on iOS, Android, or web
 
+### Using Android Studio
+
+For running the app directly in Android Studio, we've provided scripts to fix common issues:
+
+```bash
+# Apply all fixes and prepare for Android Studio
+npm run fix-all
+
+# Open Android Studio with the correct environment variables
+npm run studio
+```
+
+See the [Android Studio Guide](ANDROID-STUDIO-GUIDE.md) for detailed instructions.
+
 ## Troubleshooting
 
-If you encounter any issues with the app, you can try:
+### Expo Issues
+
+If you encounter any issues with the Expo app, you can try:
 
 ```bash
 # Reset the app (clean dependencies and restart)
@@ -50,6 +68,32 @@ This will:
 4. Reinstall dependencies
 5. Apply the expo-asset fix
 6. Start the Expo development server
+
+### Android Studio Issues
+
+If you encounter issues with Android Studio:
+
+#### "Cannot run program 'node'" error
+
+```bash
+npm run fix-all
+```
+
+This will fix the Gradle settings for your specific Gradle version.
+
+#### "Unable to load script" Error
+
+If you encounter the "Unable to load script" error:
+
+```bash
+# Generate the bundle
+npm run bundle
+
+# Open Android Studio with the correct environment variables
+npm run studio
+```
+
+For more detailed troubleshooting, see the [Android Studio Guide](ANDROID-STUDIO-GUIDE.md).
 
 ## Project Structure
 

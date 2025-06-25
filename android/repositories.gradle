@@ -1,0 +1,25 @@
+// Define repositories for all projects
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+    }
+}
+
+// Define repositories for buildscript
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// Define repositories for settings
+settings.dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://www.jitpack.io' }
+    }
+}
