@@ -9,7 +9,11 @@
     "web": "npm run fix-asset && expo start --web",
     "clean": "rm -rf .expo && rm -rf node_modules && rm -f package-lock.json && npm install",
     "reset": "npm run clean && npm run fix-asset && expo start",
-    "fix-asset": "bash ./fix-expo-asset.sh"
+    "fix-asset": "bash ./fix-expo-asset.sh",
+    "bundle": "bash ./generate-bundle.sh",
+    "studio": "bash ./open-android-studio.sh",
+    "run-android": "bash ./run-android.sh",
+    "fix-all": "node fix-all.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
