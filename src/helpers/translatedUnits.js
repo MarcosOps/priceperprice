@@ -1,5 +1,4 @@
-import { unitConversionRates, unitCategories, units as originalUnits, areUnitsCompatible, convertToBaseUnit, getBaseUnit, calculateBasePrice, compareProducts as originalCompareProducts } from './units';
-import { useLanguage } from '../context/LanguageContext';
+import { unitConversionRates, unitCategories, units as originalUnits, areUnitsCompatible, convertToBaseUnit, getBaseUnit, calculateBasePrice } from './units';
 import { getTranslation } from '../translations/translations';
 
 // Function to get translated unit names
@@ -7,16 +6,6 @@ export const getTranslatedUnits = (languageCode) => {
   // For now, we'll keep the original unit symbols as they are universal
   // but in a real app, you might want to translate the full names
   return originalUnits;
-};
-
-// Function to get the translated winner product name
-export const getTranslatedProductName = (productKey, languageCode) => {
-  if (productKey === 'Product 1') {
-    return getTranslation(languageCode, 'product1');
-  } else if (productKey === 'Product 2') {
-    return getTranslation(languageCode, 'product2');
-  }
-  return productKey;
 };
 
 // Re-export the original functions from units.js
@@ -50,7 +39,6 @@ export const compareProducts = (product1, product2, languageCode = 'en') => {
   return {
     status: 'DIFFERENT_PRICE',
     winner,
-    translatedWinner: getTranslatedProductName(winner, languageCode),
     baseUnit,
     cheaperPrice: Math.min(basePrice1, basePrice2),
     expensivePrice: Math.max(basePrice1, basePrice2),

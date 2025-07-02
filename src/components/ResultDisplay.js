@@ -10,6 +10,18 @@ export default function ResultDisplay({ result }) {
   
   if (!result) return null;
 
+  const getCurrencySymbol = (lang) => {
+    switch (lang) {
+      case 'pt':
+        return 'R$';
+      case 'es':
+      case 'fr':
+        return '€';
+      default:
+        return '$';
+    }
+  };
+
   const formatPrice = (price) => price.toFixed(2);
   const formatPercentage = (percentage) => percentage.toFixed(2);
 
@@ -27,7 +39,7 @@ export default function ResultDisplay({ result }) {
     return (
       <View style={styles.conversionResultContainer}>
         <Text style={styles.conversionResultMessage}>
-          Units are not compatible. Please compare liquid with liquid, weight with weight, or quantity with quantity.
+          {getTranslation(lang, 'incompatibleUnits')}
         </Text>
       </View>
     );
@@ -48,6 +60,7 @@ export default function ResultDisplay({ result }) {
     const product2Label = getTranslation(lang, 'product2');
     const winnerLabel = result.winner === 'Product 1' ? product1Label : product2Label;
     const loserLabel = result.winner === 'Product 1' ? product2Label : product1Label;
+    const currencySymbol = getCurrencySymbol(lang);
     
     return (
       <View style={styles.conversionResultContainer}>
@@ -62,11 +75,11 @@ export default function ResultDisplay({ result }) {
         </Text>
 
         <Text style={styles.conversionResultMessage}>
-          {getTranslation(lang, 'pricePerUnit')}: ${formatPrice(result.cheaperPrice)}/{result.baseUnit} vs ${formatPrice(result.expensivePrice)}/{result.baseUnit}
+          {getTranslation(lang, 'pricePerUnit')}: {currencySymbol}{formatPrice(result.cheaperPrice)}/{result.baseUnit} vs {currencySymbol}{formatPrice(result.expensivePrice)}/{result.baseUnit}
         </Text>
 
         <Text style={styles.conversionResultDifference}>
-          ${formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}%)
+          {currencySymbol}{formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}%)
         </Text>
       </View>
     );

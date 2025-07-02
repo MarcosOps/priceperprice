@@ -1,6 +1,6 @@
 {
   "expo": {
-    "entryPoint": "./components/App.js",
+    "entryPoint": "./App.js",
     "plugins": [
       "expo-asset"
     ]

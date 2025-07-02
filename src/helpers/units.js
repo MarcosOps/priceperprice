@@ -62,44 +62,9 @@ export const getBaseUnit = (unit) => {
 export const calculateBasePrice = (price, quantity, unit) => {
   const baseQuantity = convertToBaseUnit(quantity, unit);
   
-  // Prevent division by zero
   if (baseQuantity === 0) {
     throw new Error('Quantity cannot be zero');
   }
   
-  // Round to 2 decimal places
-  return Math.round((price / baseQuantity) * 100) / 100;
-};
-
-export const compareProducts = (product1, product2) => {
-  const { price: price1, quantity: quantity1, unit: unit1 } = product1;
-  const { price: price2, quantity: quantity2, unit: unit2 } = product2;
-  
-  if (!areUnitsCompatible(unit1, unit2)) {
-    return { error: 'INCOMPATIBLE_UNITS' };
-  }
-  
-  const baseUnit = getBaseUnit(unit1);
-  const basePrice1 = calculateBasePrice(price1, quantity1, unit1);
-  const basePrice2 = calculateBasePrice(price2, quantity2, unit2);
-  const difference = Math.abs(basePrice1 - basePrice2);
-  
-  if (difference < 0.0001) {
-    return { 
-      status: 'SAME_PRICE',
-      baseUnit,
-      basePrice1: Math.round(basePrice1 * 100) / 100,
-      basePrice2: Math.round(basePrice2 * 100) / 100
-    };
-  }
-  
-  return {
-    status: 'DIFFERENT_PRICE',
-    winner: basePrice1 < basePrice2 ? 'Product 1' : 'Product 2',
-    baseUnit,
-    cheaperPrice: Math.round(Math.min(basePrice1, basePrice2) * 100) / 100,
-    expensivePrice: Math.round(Math.max(basePrice1, basePrice2) * 100) / 100,
-    difference: Math.round(difference * 100) / 100,
-    differencePercentage: Math.round((difference / Math.max(basePrice1, basePrice2)) * 100 * 100) / 100
-  };
+  return price / baseQuantity;
 };
