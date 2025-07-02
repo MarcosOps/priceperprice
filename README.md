@@ -15,6 +15,39 @@ A React Native app for comparing product prices based on quantity and unit.
 - Persistent language preference using AsyncStorage
 
 ## Installation
+
+1. **Install Dependencies**
+
+   ```bash
+   npm install
+   ```
+
+## Running the App with Expo Go
+
+1. **Start the Metro Bundler**
+
+   ```bash
+   npx expo start
+   ```
+
+2. **Run on Your Device**
+
+   - **iOS**: Open the Camera app and scan the QR code from the terminal. Follow the prompt to open the project in Expo Go.
+   - **Android**: Scan the QR code from the Expo Go app.
+
+   You can also press `i` in the terminal to open the iOS Simulator or `a` to open the Android Emulator.
+
+## Troubleshooting
+
+If you encounter any issues, you can try resetting the project:
+
+```bash
+npm run reset
+```
+
+This will clean your project by removing `node_modules` and reinstalling the dependencies.
+
+## Mantinance:
 ###  Atualize suas dependências principais
 ```
 npm outdated                                                                                            ~/Documents/projeto/app/priceperprice
@@ -51,51 +84,6 @@ Upgrading /Users/marcosfeitoza/Documents/projeto/app/priceperprice/package.json
  react-native-reanimated       ~3.17.4  →   ~3.18.0
  Run npm install to install new versions.
  ```
-
-```bash
-# Install dependencies
-  npm install
-```
-
-```
-up to date, audited 716 packages in 5s
-
-70 packages are looking for funding
-  run `npm fund` for details
-
-found 0 vulnerabilities
-```
-
-## Running the App
-
-Simply run:
-
-```bash
-npx expo start
-```
-
-This will:
-1. Apply necessary fixes for dependencies
-2. Start the Expo development server
-3. Allow you to run the app on iOS, Android, or web
-
-## Troubleshooting
-
-If you encounter any issues with the app, you can try:
-
-```bash
-# Reset the app (clean dependencies and restart)
-npm run reset
-```
-
-This will:
-1. Remove the .expo directory
-2. Remove node_modules
-3. Remove package-lock.json
-4. Reinstall dependencies
-5. Apply the expo-asset fix
-6. Start the Expo development server
-
 ## Project Structure
 
 ```
@@ -123,3 +111,4 @@ priceperprice/
 │   ├── StackNavigator.js
 ├── App.js              # Main app file
 ├── package.json        # Project dependencies
+```

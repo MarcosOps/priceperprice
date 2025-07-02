@@ -29,21 +29,16 @@ export default function ConversionScreen() {
   const [result, setResult] = useState({});
 
   const comparePrices = () => {
-    // Dismiss keyboard on iOS
     if (Platform.OS === 'ios') {
       Keyboard.dismiss();
     }
     
-    // Parse prices - remove currency symbols and keep only numbers
-    // Since formatCurrency divides by 100, we need to multiply by 100 here
     const numericPrice1 = (parseFloat(price1.replace(/[^0-9]/g, '')) || 0) / 100;
     const numericPrice2 = (parseFloat(price2.replace(/[^0-9]/g, '')) || 0) / 100;
     
-    // Parse quantities
     const numericQuantity1 = parseFloat(quantity1);
     const numericQuantity2 = parseFloat(quantity2);
 
-        // Validar entradas
     if (isNaN(numericPrice1) || isNaN(numericPrice2) || 
         isNaN(numericQuantity1) || isNaN(numericQuantity2) ||
         numericQuantity1 <= 0 || numericQuantity2 <= 0) {
@@ -68,7 +63,6 @@ export default function ConversionScreen() {
   };
 
   const clearFields = () => {
-    // Dismiss keyboard on iOS
     if (Platform.OS === 'ios') {
       Keyboard.dismiss();
     }
@@ -99,7 +93,7 @@ export default function ConversionScreen() {
         unit={unit1} setUnit={setUnit1}
         quantity={quantity1} setQuantity={setQuantity1}
         price={price1} setPrice={setPrice1}
-        formatCurrency={formatCurrency}
+        formatCurrency={(text) => setPrice1(formatCurrency(text, lang))}
       />
 
       <Text style={styles.conversionLabel}>{getTranslation(lang, 'product2')}</Text>
@@ -107,7 +101,7 @@ export default function ConversionScreen() {
         unit={unit2} setUnit={setUnit2}
         quantity={quantity2} setQuantity={setQuantity2}
         price={price2} setPrice={setPrice2}
-        formatCurrency={formatCurrency}
+        formatCurrency={(text) => setPrice2(formatCurrency(text, lang))}
       />
 
       <View style={styles.conversionButtonContainer}>

@@ -1,4 +1,3 @@
-// Translations for all text in the app
 export const translations = {
   en: {
     // ConversionScreen
@@ -28,6 +27,7 @@ export const translations = {
     by: 'improve',
     samePrice: 'Both products have the same price per unit',
     invalidInput: 'Please enter valid quantities and prices',
+    incompatibleUnits: 'Units are not compatible. Please compare liquid with liquid, weight with weight, or quantity with quantity.',
     pricePerUnit: 'Price per unit',
   },
   es: {
@@ -58,6 +58,7 @@ export const translations = {
     by: 'mejora',
     samePrice: 'Ambos productos tienen el mismo precio por unidad',
     invalidInput: 'Por favor, ingrese cantidades y precios válidos',
+    incompatibleUnits: 'Las unidades no son compatibles. Por favor, compare líquidos con líquidos, peso con peso o cantidad con cantidad.',
     pricePerUnit: 'Precio por unidad',
   },
   pt: {
@@ -88,6 +89,7 @@ export const translations = {
     by: 'melhoria',
     samePrice: 'Ambos os produtos têm o mesmo preço por unidade',
     invalidInput: 'Por favor, insira quantidades e preços válidos',
+    incompatibleUnits: 'As unidades não são compatíveis. Por favor, compare líquido com líquido, peso com peso ou quantidade com quantidade.',
     pricePerUnit: 'Preço por unidade',
   },
   fr: {
@@ -118,6 +120,7 @@ export const translations = {
     by: 'amélioration',
     samePrice: 'Les deux produits ont le même prix par unité',
     invalidInput: 'Veuillez entrer des quantités et des prix valides',
+    incompatibleUnits: 'Les unités ne sont pas compatibles. Veuillez comparer les liquides avec les liquides, le poids avec le poids ou la quantité avec la quantité.',
     pricePerUnit: 'Prix par unité',
   }
 };

@@ -96,7 +96,7 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
         placeholderTextColor="#666"
         keyboardType="numeric"
         value={price}
-        onChangeText={(text) => setPrice(formatCurrency(text))}
+        onChangeText={formatCurrency}
         blurOnSubmit={true}
         returnKeyType="done"
       />
