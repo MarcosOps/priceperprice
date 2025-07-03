@@ -3,6 +3,9 @@
     "entryPoint": "./App.js",
     "plugins": [
       "expo-asset"
-    ]
+    ],
+    "android": {
+      "package": "com.munkot007.priceperprice"
+    }
   }
 }

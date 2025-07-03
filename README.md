@@ -14,38 +14,70 @@ A React Native app for comparing product prices based on quantity and unit.
 - Language selection with country flags
 - Persistent language preference using AsyncStorage
 
-## Installation
+## How to Run Locally and Create an APK
 
-1. **Install Dependencies**
+### 1. Run for Development (using Expo Go)
 
-   ```bash
-   npm install
-   ```
+This is the easiest way to get started and test your app during development.
 
-## Running the App with Expo Go
+1.  **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-1. **Start the Metro Bundler**
+2.  **Start the Metro Bundler:**
+    ```bash
+    npx expo start
+    ```
+    This will open a new tab in your browser with the Expo Dev Tools.
 
-   ```bash
-   npx expo start
-   ```
+3.  **Run on Your Device/Emulator:**
+    *   **iOS:** Open the Camera app on your iPhone/iPad and scan the QR code displayed in the terminal or Expo Dev Tools. Follow the prompts to open the project in the Expo Go app.
+    *   **Android:** Open the Expo Go app on your Android device and scan the QR code displayed in the terminal or Expo Dev Tools.
 
-2. **Run on Your Device**
+    Alternatively, you can press `i` in the terminal to open the iOS Simulator or `a` to open the Android Emulator (if configured).
 
-   - **iOS**: Open the Camera app and scan the QR code from the terminal. Follow the prompt to open the project in Expo Go.
-   - **Android**: Scan the QR code from the Expo Go app.
+### 2. Build an APK for a Device
 
-   You can also press `i` in the terminal to open the iOS Simulator or `a` to open the Android Emulator.
+If you need a standalone Android application package (.apk) to install directly on a device, follow these steps. This process requires native build tools (Android SDK, Java) to be set up on your machine.
 
-## Troubleshooting
+1.  **Generate Native Android Project Files:**
+    If you don't have an `android` folder in your project root, or if you've deleted it, you need to generate the native project files. This command creates the `android` directory with all necessary native code and configurations.
+    ```bash
+    npx expo prebuild --platform android
+    ```
+    *Note: If you have made manual changes to the `android` folder, they will be overwritten by this command. Ensure you back up any custom native code.*
 
-If you encounter any issues, you can try resetting the project:
+2.  **Navigate to the Android Project Directory:**
+    ```bash
+    cd android
+    ```
+
+3.  **Build the Release APK:**
+    This command compiles your Android project and generates a release-ready APK.
+    ```bash
+    ./gradlew assembleRelease
+    ```
+    The generated APK will be located at `android/app/build/outputs/apk/release/app-release.apk`.
+
+4.  **Install the APK on a Device (Optional):**
+    Ensure your Android device has USB debugging enabled and is connected to your computer.
+    ```bash
+    adb install app/build/outputs/apk/release/app-release.apk
+    ```
+    *Replace `app/build/outputs/apk/release/app-release.apk` with the actual path to your generated APK if it differs.*
+
+### Troubleshooting
+
+If you encounter any issues during installation or building, you can try resetting the project:
 
 ```bash
 npm run reset
 ```
+This will clean your project by removing `node_modules` and reinstalling the dependencies. 
 
-This will clean your project by removing `node_modules` and reinstalling the dependencies.
+
+
 
 ## Mantinance:
 ###  Atualize suas dependências principais
