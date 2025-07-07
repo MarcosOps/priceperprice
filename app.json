@@ -1,11 +1,15 @@
 {
   "expo": {
     "entryPoint": "./App.js",
+    "icon": "./assets/icon.png",
     "plugins": [
       "expo-asset"
     ],
     "android": {
       "package": "com.munkot007.priceperprice"
+    },
+    "ios": {
+      "bundleIdentifier": "com.munkot007.priceperprice"
     }
   }
 }

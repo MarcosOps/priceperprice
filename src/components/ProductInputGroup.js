@@ -13,15 +13,17 @@ export default function ProductInputGroup({ unit, setUnit, quantity, setQuantity
   const units = getTranslatedUnits(lang);
 
   const renderAndroidPicker = () => (
-    <Picker
-      selectedValue={unit}
-      onValueChange={(itemValue) => setUnit(itemValue)}
-      style={styles.conversionPicker}
-    >
-      {units.map((unit) => (
-        <Picker.Item key={unit} label={unit} value={unit} />
-      ))}
-    </Picker>
+    <View style={styles.pickerContainer}>
+      <Picker
+        selectedValue={unit}
+        onValueChange={(itemValue) => setUnit(itemValue)}
+        style={styles.androidPicker}
+      >
+        {units.map((unit) => (
+          <Picker.Item key={unit} label={unit} value={unit} />
+        ))}
+      </Picker>
+    </View>
   );
 
   const renderIOSPicker = () => (

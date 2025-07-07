@@ -74,7 +74,38 @@ If you encounter any issues during installation or building, you can try resetti
 ```bash
 npm run reset
 ```
-This will clean your project by removing `node_modules` and reinstalling the dependencies. 
+This will clean your project by removing `node_modules` and reinstalling the dependencies.
+
+#### How to Capture Logcat for Debugging
+
+If your app crashes on a device, capturing the logcat output is crucial for diagnosing the issue. This will provide detailed error messages and stack traces.
+
+1.  **Enable USB Debugging on your Android device:**
+    *   Go to `Settings` > `About phone` (or `About device`).
+    *   Tap "Build number" seven times rapidly until you see a message that "Developer options" are enabled.
+    *   Go back to `Settings` > `System` (or `Developer options` directly if it appears in the main settings list).
+    *   Find and enable "USB debugging."
+
+2.  **Connect your Android device to your computer:**
+    *   Use a USB cable to connect your phone to your computer.
+    *   On your phone, you might see a pop-up asking to "Allow USB debugging." Tap "OK."
+
+3.  **Verify device connection:**
+    Open your terminal and run:
+    ```bash
+    adb devices
+    ```
+    You should see your device listed.
+
+4.  **Capture the logs:**
+    Run the following command in your terminal:
+    ```bash
+    adb logcat -s "AndroidRuntime:E *:S" > app_crash_log_filtered.txt
+    ```
+    *   Immediately after running this command, try to open your app on the Android device. Let it crash.
+    *   Once the app crashes, go back to your terminal and press `Ctrl+C` (or `Cmd+C` on Mac) to stop the logcat capture.
+
+    A file named `app_crash_log_filtered.txt` will be created in your current directory (`/Users/marcosfeitoza/`). This file will contain only error messages, making it easier to pinpoint the issue. 
 
 
 

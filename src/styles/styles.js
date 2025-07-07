@@ -69,6 +69,18 @@ export default StyleSheet.create({
     backgroundColor: '#FFFFFF', // Fundo branco para os campos de entrada
     color: '#000000', // Cor do texto preto
   },
+  pickerContainer: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF', // Fundo branco para o contêiner do Picker
+  },
+  androidPicker: {
+    height: 50,
+    width: '100%',
+    color: '#000000', // Cor do texto preto
+  },
   conversionButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
