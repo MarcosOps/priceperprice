@@ -1,67 +1,57 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet, Animated, Easing } from 'react-native';
 
 const SplashScreen = ({ navigation }) => {
-  const appName = "PricePerPrice"; // App name
-  const highlightText = "Per"; // Highlighted text
-  const letterAnimations = useRef(appName.split('').map(() => new Animated.Value(0))).current; // Array of animated values for each letter
+  const appName = "PricePerPrice";
+  const highlightText = "Per";
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Sequential animation for each letter
-    const animations = letterAnimations.map((anim, index) =>
-      Animated.timing(anim, {
+    Animated.parallel([
+      Animated.timing(scaleAnim, {
         toValue: 1,
-        duration: 5, // Duration of each letter's animation
-        delay: index * 5, // Delay between letters
+        duration: 1000,
+        easing: Easing.out(Easing.ease),
         useNativeDriver: true,
-      })
-    );
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 1200,
+        useNativeDriver: true,
+      }),
+    ]).start();
 
-    // Start all animations
-    Animated.sequence(animations).start();
-
-    // Redirect to the main screen after the animation
     const timer = setTimeout(() => {
       navigation.replace('Conversion');
-    }, appName.length * 150 + 1000); // Total animation time + 1 second wait
+    }, 2000); // Wait for 2 seconds before navigating
 
-    return () => clearTimeout(timer); // Clear the timer when the component unmounts
-  }, [letterAnimations, navigation]);
+    return () => clearTimeout(timer);
+  }, [navigation, scaleAnim, opacityAnim]);
+
+  const renderAppName = () => {
+    const parts = appName.split(new RegExp(`(${highlightText})`, 'gi'));
+    return (
+      <Text style={styles.text}>
+        {parts.map((part, index) => (
+          <Text
+            key={index}
+            style={{
+              color: part.toLowerCase() === highlightText.toLowerCase() ? '#4A90E2' : '#333333',
+            }}
+          >
+            {part}
+          </Text>
+        ))}
+      </Text>
+    );
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
-        {appName.split('').map((letter, index) => {
-          // Check if the current letter is part of the highlighted text
-          const isHighlighted =
-            index >= appName.indexOf(highlightText) &&
-            index < appName.indexOf(highlightText) + highlightText.length;
-
-          return (
-            <Animated.Text
-              key={index}
-              style={[
-                styles.text,
-                {
-                  opacity: letterAnimations[index], // Opacity animation
-                  transform: [
-                    {
-                      translateY: letterAnimations[index].interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [20, 0], // Vertical displacement animation
-                      }),
-                    },
-                  ],
-                  color: isHighlighted ? '#FF0000' : '#000000', // Text color (red for "Per", black for the rest)
-                  fontWeight: 'bold', // Bold text
-                },
-              ]}
-            >
-              {letter}
-            </Animated.Text>
-          );
-        })}
-      </View>
+      <Animated.View style={{ transform: [{ scale: scaleAnim }], opacity: opacityAnim }}>
+        {renderAppName()}
+      </Animated.View>
     </View>
   );
 };
@@ -71,15 +61,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#FFFF00', // Yellow background
-  },
-  textContainer: {
-    flexDirection: 'row', // Arrange letters horizontally
+    backgroundColor: '#F5F5F5',
   },
   text: {
-    fontSize: 32,
-    fontWeight: 'bold', // Bold text
-    marginHorizontal: 2, // Spacing between letters
+    fontSize: 42,
+    fontWeight: 'bold',
   },
 });
 

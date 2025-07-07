@@ -8,78 +8,68 @@ export default function ResultDisplay({ result }) {
   const { currentLanguage } = useLanguage();
   const lang = currentLanguage.code;
   
-  if (!result) return null;
+  if (!result || Object.keys(result).length === 0) return null;
 
   const getCurrencySymbol = (lang) => {
     switch (lang) {
-      case 'pt':
-        return 'R$';
+      case 'pt': return 'R$';
       case 'es':
-      case 'fr':
-        return '€';
-      default:
-        return '$';
+      case 'fr': return '€';
+      default: return '$';
     }
   };
 
   const formatPrice = (price) => price.toFixed(2);
   const formatPercentage = (percentage) => percentage.toFixed(2);
 
-  if (result.error === 'INVALID_INPUT') {
-    return (
-      <View style={styles.conversionResultContainer}>
-        <Text style={styles.conversionResultMessage}>
-          {getTranslation(lang, 'invalidInput')}
-        </Text>
-      </View>
-    );
-  }
+  const renderMessage = (messageKey) => (
+    <View style={styles.conversionResultContainer}>
+      <Text style={styles.conversionResultMessage}>
+        {getTranslation(lang, messageKey)}
+      </Text>
+    </View>
+  );
 
-  if (result.error === 'INCOMPATIBLE_UNITS') {
-    return (
-      <View style={styles.conversionResultContainer}>
-        <Text style={styles.conversionResultMessage}>
-          {getTranslation(lang, 'incompatibleUnits')}
-        </Text>
-      </View>
-    );
+  if (result.error) {
+    return renderMessage(result.error === 'INVALID_INPUT' ? 'invalidInput' : 'incompatibleUnits');
   }
 
   if (result.status === 'SAME_PRICE') {
-    return (
-      <View style={styles.conversionResultContainer}>
-        <Text style={styles.conversionResultMessage}>
-          {getTranslation(lang, 'samePrice')}
-        </Text>
-      </View>
-    );
+    return renderMessage('samePrice');
   }
 
   if (result.status === 'DIFFERENT_PRICE') {
     const product1Label = getTranslation(lang, 'product1');
     const product2Label = getTranslation(lang, 'product2');
     const winnerLabel = result.winner === 'Product 1' ? product1Label : product2Label;
-    const loserLabel = result.winner === 'Product 1' ? product2Label : product1Label;
     const currencySymbol = getCurrencySymbol(lang);
     
     return (
       <View style={styles.conversionResultContainer}>
-        <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-          <Text style={styles.conversionResultWinner}>
-            {getTranslation(lang, 'betterValue')}: {winnerLabel}
+        <Text style={styles.conversionResultWinner}>
+          {`🏆 ${getTranslation(lang, 'betterValue')}! `}
+        </Text>
+        <Text style={styles.conversionResultMessage}>
+          {`${winnerLabel} ${getTranslation(lang, 'isCheaper')}`}
+        </Text>
+
+        <View style={{ marginVertical: 15 }}>
+          <Text style={[
+            styles.priceDetailText,
+            result.winner === 'Product 1' && styles.priceDetailWinnerText
+          ]}>
+            {`${product1Label}: ${currencySymbol}${formatPrice(result.pricePerUnit1)}/${result.baseUnit}`}
+          </Text>
+          <Text style={[
+            styles.priceDetailText,
+            result.winner === 'Product 2' && styles.priceDetailWinnerText
+          ]}>
+            {`${product2Label}: ${currencySymbol}${formatPrice(result.pricePerUnit2)}/${result.baseUnit}`}
           </Text>
         </View>
 
-        <Text style={styles.conversionResultMessage}>
-          {winnerLabel} {getTranslation(lang, 'cheaper')} {loserLabel}
-        </Text>
-
-        <Text style={styles.conversionResultMessage}>
-          {getTranslation(lang, 'pricePerUnit')}: {currencySymbol}{formatPrice(result.cheaperPrice)}/{result.baseUnit} vs {currencySymbol}{formatPrice(result.expensivePrice)}/{result.baseUnit}
-        </Text>
-
         <Text style={styles.conversionResultDifference}>
-          {currencySymbol}{formatPrice(result.difference)}/{result.baseUnit} ({formatPercentage(result.differencePercentage)}%)
+          {`💰 ${getTranslation(lang, 'youSave')} ${currencySymbol}${formatPrice(result.totalSaving)} (${formatPercentage(result.differencePercentage)}%)`}
         </Text>
       </View>
     );

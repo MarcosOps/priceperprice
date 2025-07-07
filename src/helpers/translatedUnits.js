@@ -23,26 +23,34 @@ export const compareProducts = (product1, product2, languageCode = 'en') => {
   const baseUnit = getBaseUnit(unit1);
   const basePrice1 = calculateBasePrice(price1, quantity1, unit1);
   const basePrice2 = calculateBasePrice(price2, quantity2, unit2);
+
+  if (isNaN(basePrice1) || isNaN(basePrice2)) {
+    return { error: 'INVALID_INPUT' };
+  }
+
   const difference = Math.abs(basePrice1 - basePrice2);
 
   if (difference < 0.0001) {
     return {
       status: 'SAME_PRICE',
       baseUnit,
-      basePrice1,
-      basePrice2
+      pricePerUnit1: basePrice1,
+      pricePerUnit2: basePrice2,
     };
   }
 
   const winner = basePrice1 < basePrice2 ? 'Product 1' : 'Product 2';
+  const cheaperProduct = winner === 'Product 1' ? product1 : product2;
+  const totalSaving = difference * convertToBaseUnit(cheaperProduct.quantity, cheaperProduct.unit);
   
   return {
     status: 'DIFFERENT_PRICE',
     winner,
     baseUnit,
-    cheaperPrice: Math.min(basePrice1, basePrice2),
-    expensivePrice: Math.max(basePrice1, basePrice2),
+    pricePerUnit1: basePrice1,
+    pricePerUnit2: basePrice2,
     difference,
-    differencePercentage: (difference / Math.max(basePrice1, basePrice2)) * 100
+    differencePercentage: (difference / Math.max(basePrice1, basePrice2)) * 100,
+    totalSaving,
   };
 };
